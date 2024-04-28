@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import conectorDB.ConectorDB;
+import conectorDB.conectorDB;
 import java.text.SimpleDateFormat;
 
 /**
@@ -29,7 +29,7 @@ public class Register {
     public static List<Register> getAll(String filtro) {
         List<Register> register = new ArrayList<>();
         try {
-            Connection conexion = ConectorDB.get();
+            Connection conexion = conectorDB.get();
             PreparedStatement statement = conexion.prepareStatement("SELECT * FROM register WHERE license_plate LIKE ?");
             statement.setString(1, "%" + filtro + "%");
             ResultSet resultSet = statement.executeQuery();
@@ -64,7 +64,7 @@ public class Register {
     public boolean save(Register register) {
         boolean result = false;
         try {
-            Connection conexion = ConectorDB.get();
+            Connection conexion = conectorDB.get();
             String query = "INSERT  INTO register (id_stand, license_plate, date_time, mark, type, id_employee ) VALUES(?,?,?,?,?,?)";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, register.getStand().getId());
@@ -91,7 +91,7 @@ public class Register {
     public boolean update(Register register) {
         boolean result = false;
         try {
-            Connection conexion = ConectorDB.get();
+            Connection conexion = conectorDB.get();
             String query = "UPDATE register SET id_stand=?, license_plate=?, date_time=?, mark=?, type=?, id_employee=? WHERE id=?";
             PreparedStatement statement= conexion.prepareStatement(query);
             statement.setInt(1, register.getStand().getId());
@@ -118,7 +118,7 @@ public class Register {
     public boolean delete(int id) {
         boolean result = false;
         try {
-            Connection conexion = ConectorDB.get();
+            Connection conexion = conectorDB.get();
             String query = "DELETE FROM register WHERE id= ?";
             PreparedStatement statement= conexion.prepareStatement(query);
             statement.setInt(1, id);
@@ -136,7 +136,7 @@ public class Register {
     public static Register getById(int id) {
         Register register = null;
         try {
-            Connection conexion = ConectorDB.get();
+            Connection conexion = conectorDB.get();
             String query = "SELECT * FROM register WHERE id = ?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
