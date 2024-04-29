@@ -3,7 +3,7 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import conectorDB.conectorDB;
+import conectorDB.ConectorDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,7 +55,7 @@ public class Bill {
     public static List<Bill>getAll(String filtro){
         List<Bill> bill = new ArrayList<>();
         try{
-            Connection conexion = conectorDB.get();
+            Connection conexion = ConectorDB.get();
             PreparedStatement statement =conexion.prepareStatement("SELECT * FROM bill WHERE id =?");
             
             
