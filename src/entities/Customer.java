@@ -1,9 +1,9 @@
 package entities;
 
-import com.mysql.cj.MysqlConnection;
+
 import java.util.ArrayList;
 import java.util.List;
-import conectorDB.conectorDB;
+import conectorDB.ConectorDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +20,8 @@ public class Customer {
     private String direction = new String();
     private String phone = new String();
 
+    
+    
     public Customer() {
     }
 
@@ -58,7 +60,7 @@ public class Customer {
     public static List<Customer> getAll(String filtro) {
         List<Customer> customer = new ArrayList<>();
         try {
-            Connection conexion = conectorDB.get();
+            Connection conexion = ConectorDB.get();
             PreparedStatement statement = conexion.prepareStatement("SELECT * FROM Customer WHERE name LIKE ?");
             statement.setString(1, "%" + filtro + "%");
             ResultSet resultset = statement.executeQuery();
@@ -87,7 +89,7 @@ public class Customer {
     public boolean save(Customer customer) {
         boolean result = false;
         try {
-            Connection conexion = conectorDB.get();
+            Connection conexion = ConectorDB.get();
             String query = "INSERT INTO customer (name, phone, direction) VALUES (?,?,?)";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setString(1, name);
@@ -108,7 +110,7 @@ public class Customer {
     public boolean update(int id, String name, String phone, String direction) {
         boolean result = false;
         try {
-            Connection conexion = conectorDB.get();
+            Connection conexion = ConectorDB.get();
             String query = "UPDATE customer SET name=?, phone=?, direction=? WHERE id=?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setString(1, name);
@@ -132,7 +134,7 @@ public class Customer {
     public int delete(int id) {
         int result = 0;
         try {
-            Connection conexion = conectorDB.get();
+            Connection conexion = ConectorDB.get();
             String query = "DELETE FROM customer WHERE id=?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
@@ -147,7 +149,7 @@ public class Customer {
     public static Customer getById(int id) {
         Customer customer = null;
         try {
-            Connection conexion = conectorDB.get();
+            Connection conexion = ConectorDB.get();
             String query = "SELECT * FROM customer WHERE id =?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
