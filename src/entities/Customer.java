@@ -1,6 +1,6 @@
 package entities;
 
-import com.mysql.cj.MysqlConnection;
+
 import java.util.ArrayList;
 import java.util.List;
 import conectorDB.conectorDB;
@@ -20,6 +20,8 @@ public class Customer {
     private String direction = new String();
     private String phone = new String();
 
+    
+    
     public Customer() {
     }
 
