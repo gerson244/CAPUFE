@@ -4,18 +4,16 @@
  */
 package vistas.menu.clientes;
 
-import vistas.menu.menu;
-
 /**
  *
  * @author vagui
  */
-public class ClientePrincipal extends javax.swing.JFrame {
+public class ClienteAgregar extends javax.swing.JFrame {
 
     /**
-     * Creates new form ClientePrincipal
+     * Creates new form ClienteAgregar
      */
-    public ClientePrincipal() {
+    public ClienteAgregar() {
         initComponents();
     }
 
@@ -28,16 +26,16 @@ public class ClientePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnGuardar = new javax.swing.JButton();
-        btnRegresar = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnGuardar.setText("Agregar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setText("Salir");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -48,10 +46,10 @@ public class ClientePrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnExit.setText("Salir");
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -60,38 +58,34 @@ public class ClientePrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addComponent(btnExit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 475, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnGuardar)
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegresar)
-                        .addGap(46, 46, 46))))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addGap(24, 24, 24))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        ClienteAgregar frmAgregarCliente = new ClienteAgregar();
-        frmAgregarCliente.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
@@ -100,10 +94,17 @@ public class ClientePrincipal extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        menu frmMenu = new menu();
-        frmMenu.setVisible(true);
+        ClientePrincipal frmClientePrincipal = new ClientePrincipal();
+        frmClientePrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        ClientePrincipal frmClientePrincipal = new ClientePrincipal();
+        frmClientePrincipal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,20 +123,20 @@ public class ClientePrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientePrincipal().setVisible(true);
+                new ClienteAgregar().setVisible(true);
             }
         });
     }

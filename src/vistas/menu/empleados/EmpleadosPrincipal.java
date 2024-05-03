@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import vistas.menu.menu;
 /**
  *
  * @author vagui
@@ -26,10 +27,10 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
      */
     public EmpleadosPrincipal() {
         initComponents();
-         configurarBoton(jButton1);
+         configurarBoton(btnAgregar);
         configurarBoton(jButton2);
-        configurarBoton(jButton3);
-        configurarBoton(jButton4);
+        configurarBoton(btnRegresar);
+        configurarBoton(btnEliminar);
         configurarBoton(jButton6); 
     setLocationRelativeTo(null);
     setVisible(true);
@@ -86,14 +87,14 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         jPanel1 = new DegradedPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
@@ -110,11 +111,11 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
-        jButton3.setOpaque(true);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
+        btnRegresar.setOpaque(true);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
@@ -138,9 +139,14 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/borrar-usuario.png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/borrar-usuario.png"))); // NOI18N
 
         jLabel4.setText("Agregar Usuario");
 
@@ -172,7 +178,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
+                            .addComponent(btnRegresar)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(62, 62, 62))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -183,7 +189,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(380, 380, 380)
-                        .addComponent(jButton1))
+                        .addComponent(btnAgregar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(360, 360, 360)
                         .addComponent(jLabel4)))
@@ -191,7 +197,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,12 +216,12 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jButton1)
+                        .addComponent(btnAgregar)
                         .addGap(9, 9, 9)
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel5))))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -223,7 +229,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(239, 239, 239)
-                .addComponent(jButton3)
+                .addComponent(btnRegresar)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -242,14 +248,24 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        menu frmMenu = new menu();
+        frmMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        EmpleadosAgregar frmEmpleadoAgregar = new EmpleadosAgregar();
+        frmEmpleadoAgregar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,10 +303,10 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

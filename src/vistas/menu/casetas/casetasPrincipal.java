@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import vistas.menu.menu;
 
 /**
  *
@@ -27,11 +28,11 @@ public class casetasPrincipal extends javax.swing.JFrame {
      */
     public casetasPrincipal() {
         initComponents();
-         configurarBoton(jButton1);
+         configurarBoton(btnAdd);
         configurarBoton(jButton2);
-        configurarBoton(jButton3);
+        configurarBoton(btnRegresar);
         configurarBoton(jButton4);
-        configurarBoton(jButton6); 
+        configurarBoton(btnExit); 
     setLocationRelativeTo(null);
     setVisible(true);
     }
@@ -86,18 +87,18 @@ public class casetasPrincipal extends javax.swing.JFrame {
         jPanel1 = new DegradedPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
@@ -109,11 +110,11 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
-        jButton3.setOpaque(true);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
+        btnRegresar.setOpaque(true);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
@@ -135,7 +136,12 @@ public class casetasPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia copia.png"))); // NOI18N
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia copia.png"))); // NOI18N
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/borrar-usuario.png"))); // NOI18N
 
@@ -143,10 +149,10 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
         jLabel5.setText("Eliminar Caseta");
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cerca.png"))); // NOI18N
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cerca.png"))); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -157,7 +163,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(193, 193, 193)
@@ -167,13 +173,12 @@ public class casetasPrincipal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton3))
+                                .addComponent(btnRegresar))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -182,7 +187,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(370, 370, 370)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(360, 360, 360)
                                 .addComponent(jLabel4)))
@@ -198,7 +203,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +220,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(jLabel4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -227,7 +232,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(194, 194, 194)
-                        .addComponent(jButton3)))
+                        .addComponent(btnRegresar)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -245,14 +250,24 @@ public class casetasPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        menu frmMenu = new menu();
+        frmMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
 
         this.dispose();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        AgregarCaseta frmAddCaseta = new AgregarCaseta();
+        frmAddCaseta.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,11 +305,11 @@ public class casetasPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

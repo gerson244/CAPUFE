@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas.menu;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -15,6 +16,11 @@ import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import vistas.menu.casetas.casetasPrincipal;
+import vistas.menu.clientes.ClientePrincipal;
+import vistas.menu.empleados.EmpleadosAgregar;
+import vistas.menu.empleados.EmpleadosPrincipal;
+import vistas.menu.registros.Registros;
 
 /**
  *
@@ -25,33 +31,26 @@ public class menu extends javax.swing.JFrame {
     /**
      * Creates new form menu
      */
-    
-
     public menu() {
         initComponents();
-        
-        configurarBoton(jButton1);
-        configurarBoton(jButton2);
-        configurarBoton(jButton3);
-        configurarBoton(jButton4);
-        configurarBoton(jButton5);
-        configurarBoton(jButton6); 
-    setLocationRelativeTo(null);
-    setVisible(true);
-      
+
+        configurarBoton(btnCliente);
+        configurarBoton(btnEmpleado);
+        configurarBoton(btnRegresar);
+        configurarBoton(btnCaseta);
+        configurarBoton(btnResgistro);
+        configurarBoton(jButton6);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
     }
-    
-    
 
-    
-
-    
-     private void configurarBoton(JButton boton) {
+    private void configurarBoton(JButton boton) {
         boton.setUI(new CustomButtonUI()); // Establece el ButtonUI personalizado
         boton.setOpaque(false); // Hace que el botón no sea opaco
         boton.setContentAreaFilled(false); // Desactiva el relleno del área de contenido
         boton.setBackground(new Color(0, 0, 0, 0)); // Color transparente
-        
+
         // Agrega un MouseListener para controlar el efecto de presión
         boton.addMouseListener(new MouseAdapter() {
             @Override
@@ -67,16 +66,15 @@ public class menu extends javax.swing.JFrame {
             }
         });
     }
-     
-     
-    
+
     // Clase ButtonUI personalizada
     class CustomButtonUI extends BasicButtonUI {
+
         @Override
         public void paint(Graphics g, javax.swing.JComponent c) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
+
             JButton button = (JButton) c;
             g2d.setColor(button.getBackground());
             g2d.fillRect(0, 0, button.getWidth(), button.getHeight());
@@ -84,8 +82,7 @@ public class menu extends javax.swing.JFrame {
             super.paint(g, c);
         }
     }
-     
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,13 +95,13 @@ public class menu extends javax.swing.JFrame {
         jPanel1 = new DegradedPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnEmpleado = new javax.swing.JButton();
+        btnCliente = new javax.swing.JButton();
+        btnCaseta = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
+        btnResgistro = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,26 +115,36 @@ public class menu extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
-        jButton3.setOpaque(true);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
+        btnRegresar.setOpaque(true);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
         jLabel3.setText("REGRESAR");
 
-        jButton2.setText("EMPLEADOS");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEmpleado.setText("EMPLEADOS");
+        btnEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEmpleadoActionPerformed(evt);
             }
         });
 
-        jButton1.setText("CLIENTES");
+        btnCliente.setText("CLIENTES");
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("CASETAS");
+        btnCaseta.setText("CASETAS");
+        btnCaseta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCasetaActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -152,7 +159,12 @@ public class menu extends javax.swing.JFrame {
             .addGap(0, 510, Short.MAX_VALUE)
         );
 
-        jButton5.setText("REGISTRO");
+        btnResgistro.setText("REGISTRO");
+        btnResgistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResgistroActionPerformed(evt);
+            }
+        });
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cerca.png"))); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +187,7 @@ public class menu extends javax.swing.JFrame {
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(60, 60, 60)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
@@ -184,10 +196,10 @@ public class menu extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCaseta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnResgistro, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -202,19 +214,19 @@ public class menu extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(221, 221, 221)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCaseta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnResgistro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -232,21 +244,45 @@ public class menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        menu frmMenu = new menu();
+        frmMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        EmpleadosPrincipal frmEmpleado = new EmpleadosPrincipal();
+        frmEmpleado.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEmpleadoActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
-
-    this.dispose();
-
-
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        // TODO add your handling code here:
+        ClientePrincipal frmCliente = new ClientePrincipal();
+        frmCliente.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnCasetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCasetaActionPerformed
+        // TODO add your handling code here:
+        casetasPrincipal frmCaseta = new casetasPrincipal();
+        frmCaseta.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCasetaActionPerformed
+
+    private void btnResgistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistroActionPerformed
+        // TODO add your handling code here:
+        Registros frmRegistro = new Registros();
+        frmRegistro.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnResgistroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,11 +320,11 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnCaseta;
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnEmpleado;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnResgistro;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
