@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas;
+
+import conectorDB.ConectorDB;
+import entities.Employee;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -17,6 +20,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import vistas.menu.menu;
+import java.sql.SQLException;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,19 +35,22 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
-        
+
         configurarBoton(btnEntrar);
         configurarBoton(btnReturn);
-        configurarBoton(btnExit); 
-    setLocationRelativeTo(null);
-    setVisible(true);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        Connection conexion = ConectorDB.get();
     }
-private void configurarBoton(JButton boton) {
+
+    private void configurarBoton(JButton boton) {
         boton.setUI(new CustomButtonUI()); // Establece el ButtonUI personalizado
         boton.setOpaque(false); // Hace que el botón no sea opaco
         boton.setContentAreaFilled(false); // Desactiva el relleno del área de contenido
         boton.setBackground(new Color(0, 0, 0, 0)); // Color transparente
-        
+
         // Agrega un MouseListener para controlar el efecto de presión
         boton.addMouseListener(new MouseAdapter() {
             @Override
@@ -57,16 +66,15 @@ private void configurarBoton(JButton boton) {
             }
         });
     }
-     
-     
-    
+
     // Clase ButtonUI personalizada
     class CustomButtonUI extends BasicButtonUI {
+
         @Override
         public void paint(Graphics g, javax.swing.JComponent c) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
+
             JButton button = (JButton) c;
             g2d.setColor(button.getBackground());
             g2d.fillRect(0, 0, button.getWidth(), button.getHeight());
@@ -74,6 +82,7 @@ private void configurarBoton(JButton boton) {
             super.paint(g, c);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -265,18 +274,29 @@ private void configurarBoton(JButton boton) {
     private void txfPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPasswordKeyReleased
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            // Abrir la nueva ventana
             menu frmMenu = new menu();
             frmMenu.setVisible(true);
-            this.dispose();
+            dispose();
         }
     }//GEN-LAST:event_txfPasswordKeyReleased
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
-        menu frmMenu = new menu();
-        frmMenu.setVisible(true);
-        this.dispose();
+        String user = txfUser.getText().trim();
+        String password = String.valueOf(txfPassword.getText().trim());
+
+        Employee employeeDAO = new Employee();
+        Employee employee = employeeDAO.login(user, password);
+        if (employee != null) {
+            menu frmMenu = new menu();
+            frmMenu.setVisible(true);
+            dispose(); // close the login frame
+        } else {
+            // invalid credentials, show an error message
+            JOptionPane.showMessageDialog(null, "usuario o contraseña invalida");
+        }
+
+
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
@@ -313,6 +333,7 @@ private void configurarBoton(JButton boton) {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;

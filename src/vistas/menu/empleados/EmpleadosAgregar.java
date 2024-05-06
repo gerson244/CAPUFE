@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas.menu.empleados;
-import javax.swing.JFrame;
+
+import entities.Employee;
+import vistas.menu.empleados.EmpleadosPrincipal;
+import entities.Stand;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -12,10 +15,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import vistas.estilos.DegradedPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import vistas.menu.clientes.ClientePrincipal;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,16 +27,96 @@ import vistas.menu.clientes.ClientePrincipal;
  */
 public class EmpleadosAgregar extends javax.swing.JFrame {
 
+    Employee employee;
+
+    private EmpleadosPrincipal frmEmpleadosPrincipal;
+
+    // Declarar un mapa para almacenar las ubicaciones y los IDs de las casetas
+    private Map<String, Integer> standMap = new HashMap<>();
+
     /**
      * Creates new form NewJFrame
      */
     public EmpleadosAgregar() {
         initComponents();
-         configurarBoton(btnGuardar);
+        configurarBoton(btnGuardar);
         configurarBoton(btnRegresar);
-        configurarBoton(btnExit); 
-    setLocationRelativeTo(null);
-    setVisible(true);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        cargarComboBox();
+    }
+
+    public EmpleadosAgregar(EmpleadosPrincipal frmEmpleadosPrincipal) {
+        initComponents();
+        this.frmEmpleadosPrincipal = frmEmpleadosPrincipal; // Almacena la referencia a EmpleadosPrincipal
+        configurarBoton(btnGuardar);
+        configurarBoton(btnRegresar);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        cargarComboBox();
+    }
+
+    public EmpleadosAgregar(Employee employee) {
+        initComponents();
+        this.employee = employee; // Almacena el objeto Employee pasado como argumento
+        if (employee != null) {
+            cargarDatosEmpleado();
+        }
+    }
+
+    public EmpleadosAgregar(EmpleadosPrincipal frmEmpleadosPrincipal, Employee employee) {
+        initComponents();
+        this.frmEmpleadosPrincipal = frmEmpleadosPrincipal;
+        this.employee = employee;
+        if (employee != null) {
+            cargarDatosEmpleado();
+        }
+    }
+
+    private void cargarDatosEmpleado() {
+        txfNombre.setText(employee.getName());
+        cmbPuesto.setSelectedItem(employee.getDegree());
+        txfSalario.setText(Double.toString(employee.getSalary()));
+
+        // Cargar las casetas en el ComboBox
+        cargarCaseta();
+
+        txfUsuario.setText(employee.getUser());
+        txfContrasena.setText(employee.getPassword());
+    }
+
+    public EmpleadosAgregar(String nombre, String puesto, double salario, int idCaseta) {
+        initComponents();
+        txfNombre.setText(nombre);
+        cmbPuesto.setSelectedItem(puesto);
+        txfSalario.setText(Double.toString(salario));
+        cargarCaseta();
+        cmbCaseta.setSelectedItem(idCaseta);
+
+    }
+
+    public void cargarComboBox() {
+
+        cargarCaseta();
+    }
+
+    public void cargarCaseta() {
+        cmbCaseta.removeAllItems();
+        standMap.clear(); // Limpiar el mapa antes de cargar nuevas casetas
+        List<Stand> stands = Stand.getAll(""); // Cambio de nombre a la variable
+        for (Stand stand : stands) { // Cambio de nombre de la variable de iteración
+            cmbCaseta.addItem(stand.getLocation());
+            standMap.put(stand.getLocation(), stand.getId()); // Almacenar la ubicación y el ID en el mapa
+        }
+
+        // Si estás editando un empleado existente, selecciona la ubicación actual del empleado en el ComboBox
+        if (employee != null && employee.getStand() != null) {
+            cmbCaseta.setSelectedItem(employee.getStand().getLocation());
+        }
     }
 
     private void configurarBoton(JButton boton) {
@@ -40,7 +124,7 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
         boton.setOpaque(false); // Hace que el botón no sea opaco
         boton.setContentAreaFilled(false); // Desactiva el relleno del área de contenido
         boton.setBackground(new Color(0, 0, 0, 0)); // Color transparente
-        
+
         // Agrega un MouseListener para controlar el efecto de presión
         boton.addMouseListener(new MouseAdapter() {
             @Override
@@ -56,16 +140,15 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
             }
         });
     }
-     
-     
-    
+
     // Clase ButtonUI personalizada
-       class CustomButtonUI extends BasicButtonUI {
-           @Override
-          public void paint(Graphics g, javax.swing.JComponent c) {
+    class CustomButtonUI extends BasicButtonUI {
+
+        @Override
+        public void paint(Graphics g, javax.swing.JComponent c) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
+
             JButton button = (JButton) c;
             g2d.setColor(button.getBackground());
             g2d.fillRect(0, 0, button.getWidth(), button.getHeight());
@@ -73,6 +156,7 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
             super.paint(g, c);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,12 +171,21 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txfNombre = new javax.swing.JTextField();
+        txfSalario = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cmbPuesto = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        cmbCaseta = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txfUsuario = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txfContrasena = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -127,12 +220,6 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
             .addGap(0, 610, Short.MAX_VALUE)
         );
 
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
-
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +236,28 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("NOMBRE:");
+
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("PUESTO:");
+
+        cmbPuesto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SUPERVISOR", "GERENTE", "EMPLEADO" }));
+
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("SALARIO:");
+
+        cmbCaseta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("CASETA:");
+
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("USUARIO:");
+
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("CONTRASEÑA:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -158,29 +267,38 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(17, 17, 17))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)
+                        .addGap(101, 101, 101))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnGuardar)
-                                .addGap(93, 93, 93))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(65, 65, 65))))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txfNombre)
+                                        .addComponent(txfSalario)
+                                        .addComponent(cmbPuesto, 0, 242, Short.MAX_VALUE)
+                                        .addComponent(cmbCaseta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txfContrasena))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,15 +315,33 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnGuardar)
                         .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbCaseta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar)
+                        .addGap(22, 22, 22)
                         .addComponent(jLabel4)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -216,7 +352,7 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,9 +376,47 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        EmpleadosPrincipal frmEmpleados = new EmpleadosPrincipal();
-        frmEmpleados.setVisible(true);
-        this.dispose();
+        // Obtén los datos del formulario
+        String name = txfNombre.getText();
+        String degree = (String) cmbPuesto.getSelectedItem();
+        double salary = Double.parseDouble(txfSalario.getText());
+
+        // Obtener la ubicación seleccionada en el JComboBox
+        String selectedLocation = (String) cmbCaseta.getSelectedItem();
+        // Obtener el ID correspondiente a la ubicación seleccionada del mapa
+        Integer id_stand = standMap.get(selectedLocation);
+        if (id_stand != null) {
+            // Solo si id_stand no es nulo, entonces obtén su valor entero
+            int id_stand_int = id_stand.intValue();
+
+            // Obtén los valores del usuario y la contraseña del formulario
+            String user = txfUsuario.getText();
+            String password = txfContrasena.getText();
+
+            
+            
+            // Crear un nuevo objeto Employee con los datos del formulario
+            Employee newEmployee = new Employee(name, degree, salary, id_stand_int, user, password);
+
+            // Guardar el nuevo empleado en la base de datos
+            if (newEmployee.save(newEmployee)) {
+                JOptionPane.showMessageDialog(null, "Empleado guardado correctamente");
+
+                // Actualizar la tabla en la ventana principal
+                if (frmEmpleadosPrincipal != null) {
+                    frmEmpleadosPrincipal.actualizarTabla();
+                }
+                EmpleadosPrincipal frmEmpleado = new EmpleadosPrincipal();
+                frmEmpleado.setVisible(true);
+                // Cerrar esta ventana
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar el empleado");
+            }
+        } else {
+            // Manejo de error si la ubicación seleccionada no está en el mapa
+            JOptionPane.showMessageDialog(null, "Error: Ubicación de caseta no encontrada");
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -285,13 +459,22 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> cmbCaseta;
+    private javax.swing.JComboBox<String> cmbPuesto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txfContrasena;
+    private javax.swing.JTextField txfNombre;
+    private javax.swing.JTextField txfSalario;
+    private javax.swing.JTextField txfUsuario;
     // End of variables declaration//GEN-END:variables
 }
