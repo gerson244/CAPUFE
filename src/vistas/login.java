@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import Encryption.Encoder;
 import conectorDB.ConectorDB;
 import entities.Employee;
 import javax.swing.JFrame;
@@ -29,13 +30,13 @@ import javax.swing.JOptionPane;
  * @author vagui
  */
 public class login extends javax.swing.JFrame {
-
+    private Encryption.Encoder mEncoder;
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
-
+        mEncoder = new Encoder();
         configurarBoton(btnEntrar);
         configurarBoton(btnReturn);
         configurarBoton(btnExit);
@@ -283,7 +284,7 @@ public class login extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         // TODO add your handling code here:
         String user = txfUser.getText().trim();
-        String password = String.valueOf(txfPassword.getText().trim());
+        String password = String.valueOf(mEncoder.ecnode(txfPassword.getText().trim()));
 
         Employee employeeDAO = new Employee();
         Employee employee = employeeDAO.login(user, password);

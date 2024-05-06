@@ -4,6 +4,7 @@
  */
 package vistas.menu.empleados;
 
+import Encryption.Encoder;
 import entities.Employee;
 import vistas.menu.empleados.EmpleadosPrincipal;
 import entities.Stand;
@@ -26,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author ricardorodriguez
  */
 public class EmpleadosAgregar extends javax.swing.JFrame {
-
+   private Encryption.Encoder mEncoder;
     Employee employee;
 
     private EmpleadosPrincipal frmEmpleadosPrincipal;
@@ -39,6 +40,7 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
      */
     public EmpleadosAgregar() {
         initComponents();
+        mEncoder = new Encoder();
         configurarBoton(btnGuardar);
         configurarBoton(btnRegresar);
         configurarBoton(btnExit);
@@ -391,7 +393,7 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
 
             // Obtén los valores del usuario y la contraseña del formulario
             String user = txfUsuario.getText();
-            String password = txfContrasena.getText();
+            String password = (mEncoder.ecnode(txfContrasena.getText()));
 
             
             
