@@ -392,9 +392,6 @@ public class EmpleadosAgregar extends javax.swing.JFrame {
             // Obtén los valores del usuario y la contraseña del formulario
             String user = txfUsuario.getText();
             String password = txfContrasena.getText();
-
-            
-            
             // Crear un nuevo objeto Employee con los datos del formulario
             Employee newEmployee = new Employee(name, degree, salary, id_stand_int, user, password);
 
