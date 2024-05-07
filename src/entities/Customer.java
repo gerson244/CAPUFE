@@ -24,6 +24,12 @@ public class Customer {
     
     public Customer() {
     }
+    
+    public Customer(String name, String direction, String phone) {
+        this.name = name;
+        this.direction=direction;
+        this.phone=phone;
+    }
 
     public int getId() {
         return id;

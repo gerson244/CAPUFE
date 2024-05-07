@@ -17,7 +17,7 @@ import vistas.estilos.DegradedPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import vistas.menu.casetas.casetasPrincipal;
-import vistas.menu.clientes.ClientePrincipal;
+import vistas.menu.clientes.clientePrincipal;
 import vistas.menu.empleados.EmpleadosAgregar;
 import vistas.menu.empleados.EmpleadosPrincipal;
 import vistas.menu.registros.Registros;
@@ -265,7 +265,7 @@ public class menu extends javax.swing.JFrame {
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         // TODO add your handling code here:
-        ClientePrincipal frmCliente = new ClientePrincipal();
+        clientePrincipal frmCliente = new clientePrincipal();
         frmCliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClienteActionPerformed

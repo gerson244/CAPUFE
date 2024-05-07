@@ -27,6 +27,7 @@ import vistas.menu.menu;
 public class EmpleadosPrincipal extends javax.swing.JFrame {
 
     Employee employee;
+    Employee employee1 = new Employee();
 
     private EmpleadosPrincipal frmEmpleadosPrincipal;
 
@@ -53,6 +54,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
     }
 
     public void llenarTabla(String filtro) {
+     
         List<Employee> resultados = Employee.getAll(filtro);
         DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
@@ -67,7 +69,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
             };
             model.addRow(rowData);
         }
-
+    tblEmpleados.setModel(model);
     }
 
     private void configurarBoton(JButton boton) {

@@ -17,7 +17,7 @@ public class ConectorDB {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://capufe.ctsk2cimm11s.us-east-1.rds.amazonaws.com:3306/capufe?allowPublicKeyRetrieval=true&useSSL=false","bdagms","q54D7dZgItlSNAsBVlGm");
         } catch (Exception ex) {
-            System.err.print("Error: " + ex.getMessage());
+            System.err.print(" Error: " + ex.getMessage());
         }
         return connection;
     }

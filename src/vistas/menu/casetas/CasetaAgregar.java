@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vistas.menu.casetas;
+
+import entities.Stand;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -15,30 +17,60 @@ import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author ricardorodriguez
  */
-public class AgregarCaseta extends javax.swing.JFrame {
+public class CasetaAgregar extends javax.swing.JFrame {
+
+    Stand stand;
+    private casetasPrincipal frmCasetaPrincipal;
+    
 
     /**
      * Creates new form AgregarCaseta
      */
-    public AgregarCaseta() {
+    public CasetaAgregar() {
         initComponents();
-         configurarBoton(btnAgregar);
+        configurarBoton(btnAgregar);
         configurarBoton(btnRegresar);
-        configurarBoton(btnExit); 
-    setLocationRelativeTo(null);
-    setVisible(true);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
-     private void configurarBoton(JButton boton) {
+    
+    public CasetaAgregar(casetasPrincipal frmCasetaPrincipal){
+        initComponents();
+        this.frmCasetaPrincipal = frmCasetaPrincipal;
+        configurarBoton(btnAgregar);
+        configurarBoton(btnRegresar);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    
+    public CasetaAgregar(casetasPrincipal frmCasetaPrincipal, Stand stand){
+        initComponents();
+        this.frmCasetaPrincipal = frmCasetaPrincipal;
+        this.stand = stand;
+        if(stand != null){
+            cargarDatosStand();
+        }
+    }
+    
+    private void cargarDatosStand(){
+        txfName.setText(stand.getName());
+        txfLocation.setText(stand.getLocation());
+    }
+
+    private void configurarBoton(JButton boton) {
         boton.setUI(new CustomButtonUI()); // Establece el ButtonUI personalizado
         boton.setOpaque(false); // Hace que el botón no sea opaco
         boton.setContentAreaFilled(false); // Desactiva el relleno del área de contenido
         boton.setBackground(new Color(0, 0, 0, 0)); // Color transparente
-        
+
         // Agrega un MouseListener para controlar el efecto de presión
         boton.addMouseListener(new MouseAdapter() {
             @Override
@@ -54,16 +86,15 @@ public class AgregarCaseta extends javax.swing.JFrame {
             }
         });
     }
-     
-     
-    
+
     // Clase ButtonUI personalizada
-       class CustomButtonUI extends BasicButtonUI {
-           @Override
-          public void paint(Graphics g, javax.swing.JComponent c) {
+    class CustomButtonUI extends BasicButtonUI {
+
+        @Override
+        public void paint(Graphics g, javax.swing.JComponent c) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
+
             JButton button = (JButton) c;
             g2d.setColor(button.getBackground());
             g2d.fillRect(0, 0, button.getWidth(), button.getHeight());
@@ -71,6 +102,7 @@ public class AgregarCaseta extends javax.swing.JFrame {
             super.paint(g, c);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,13 +117,13 @@ public class AgregarCaseta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txfName = new javax.swing.JTextField();
+        txfLocation = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(220, 225, 201));
@@ -124,14 +156,14 @@ public class AgregarCaseta extends javax.swing.JFrame {
             .addGap(0, 520, Short.MAX_VALUE)
         );
 
-        jTextField1.setText("Nombre");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txfName.setText("Nombre");
+        txfName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txfNameActionPerformed(evt);
             }
         });
 
-        jTextField2.setText("Ubicacion");
+        txfLocation.setText("Ubicacion");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia.png"))); // NOI18N
         jLabel5.setText("jLabel5");
@@ -172,8 +204,8 @@ public class AgregarCaseta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))))
+                                    .addComponent(txfLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                    .addComponent(txfName))))
                         .addContainerGap(27, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -201,9 +233,9 @@ public class AgregarCaseta extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(115, 115, 115)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -232,9 +264,9 @@ public class AgregarCaseta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txfNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txfNameActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
 
@@ -244,6 +276,24 @@ public class AgregarCaseta extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        
+        String name = txfName.getText();
+        String location = txfLocation.getText();
+        
+        Stand newStand = new Stand(name,  location);
+        if(newStand.save(newStand)){
+            JOptionPane.showMessageDialog(null, "caseta guardada correctamente");
+            
+            if(frmCasetaPrincipal != null){
+                frmCasetaPrincipal.actualizarTabla();
+            }
+            casetasPrincipal frmCasetas = new casetasPrincipal();
+            frmCasetas.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al guardar la caseta");
+        }
+        
         casetasPrincipal frmCasetas = new casetasPrincipal();
         frmCasetas.setVisible(true);
         this.dispose();
@@ -266,20 +316,23 @@ public class AgregarCaseta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarCaseta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarCaseta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarCaseta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarCaseta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarCaseta().setVisible(true);
+                new CasetaAgregar().setVisible(true);
             }
         });
     }
@@ -293,7 +346,7 @@ public class AgregarCaseta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txfLocation;
+    private javax.swing.JTextField txfName;
     // End of variables declaration//GEN-END:variables
 }
