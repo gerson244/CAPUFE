@@ -289,9 +289,10 @@ public class login extends javax.swing.JFrame {
         Employee employeeDAO = new Employee();
         Employee employee = employeeDAO.login(user, password);
         if (employee != null) {
-            menu frmMenu = new menu();
+            JOptionPane.showMessageDialog(null, "Bienvenido Empleado "+employee.getName());
+            menu frmMenu = new menu(employee);
             frmMenu.setVisible(true);
-            dispose(); // close the login frame
+           // dispose(); // close the login frame
         } else {
             // invalid credentials, show an error message
             JOptionPane.showMessageDialog(null, "usuario o contraseña invalida");

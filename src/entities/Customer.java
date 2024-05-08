@@ -96,7 +96,7 @@ public class Customer {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "INSERT INTO customer (name, phone, direction) VALUES (?,?,?)";
+            String query = "INSERT INTO Customer (name, phone, direction) VALUES (?,?,?)";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setString(1, name);
             statement.setString(2, phone);
@@ -117,7 +117,7 @@ public class Customer {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "UPDATE customer SET name=?, phone=?, direction=? WHERE id=?";
+            String query = "UPDATE Customer SET name=?, phone=?, direction=? WHERE id=?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setString(1, name);
             statement.setString(2, phone);
@@ -141,7 +141,7 @@ public class Customer {
         int result = 0;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "DELETE FROM customer WHERE id=?";
+            String query = "DELETE FROM Customer WHERE id=?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
             result = statement.executeUpdate();
@@ -156,7 +156,7 @@ public class Customer {
         Customer customer = null;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "SELECT * FROM customer WHERE id =?";
+            String query = "SELECT * FROM Customer WHERE id =?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultset = statement.executeQuery();

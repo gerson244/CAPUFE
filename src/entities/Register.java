@@ -24,13 +24,14 @@ public class Register {
     private String type = new String();
     private Stand stand;
     private Employee employee;
+    private double pay;
     
     
     public static List<Register> getAll(String filtro) {
         List<Register> register = new ArrayList<>();
         try {
             Connection conexion = ConectorDB.get();
-            PreparedStatement statement = conexion.prepareStatement("SELECT * FROM register WHERE license_plate LIKE ?");
+            PreparedStatement statement = conexion.prepareStatement("SELECT * FROM Register WHERE licensePlate LIKE ?");
             statement.setString(1, "%" + filtro + "%");
             ResultSet resultSet = statement.executeQuery();
 
@@ -43,16 +44,19 @@ public class Register {
                 // Puedes cargar el resto de los atributos si es necesario
                 r.setStand(stand);
                 
-                r.setLicensePlate(resultSet.getString("license_plate"));
+                r.setLicensePlate(resultSet.getString("licensePlate"));
                 r.setDataTime(resultSet.getDate("date_time"));
                 r.setMark(resultSet.getString("mark"));
                 r.setType(resultSet.getString("type"));
+                
                 
                 Employee employee = new Employee();
                 employee.setId(resultSet.getInt("id_employee"));
                 // Puedes cargar el resto de los atributos si es necesario
                 r.setEmployee(employee);
-       
+                
+                r.setPay(resultSet.getDouble("Pay"));
+                
                 register.add(r);
             }
         } catch (SQLException ex) {
@@ -65,7 +69,7 @@ public class Register {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "INSERT  INTO register (id_stand, license_plate, date_time, mark, type, id_employee ) VALUES(?,?,?,?,?,?)";
+            String query = "INSERT  INTO Register (id_stand, licensePlate, date_time, mark, type, id_employee, pay ) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, register.getStand().getId());
             statement.setString(2, register.getLicensePlate());
@@ -76,6 +80,7 @@ public class Register {
             statement.setString(4, register.getMark());
             statement.setString(5, register.getType());
             statement.setInt(6, register.getEmployee().getId());
+            statement.setDouble(7, getPay());
             
             statement.execute();
             
@@ -92,7 +97,7 @@ public class Register {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "UPDATE register SET id_stand=?, license_plate=?, date_time=?, mark=?, type=?, id_employee=? WHERE id=?";
+            String query = "UPDATE Register SET id_stand=?, licensePlate=?, date_time=?, mark=?, type=?, id_employee=?, pay=? WHERE id=?";
             PreparedStatement statement= conexion.prepareStatement(query);
             statement.setInt(1, register.getStand().getId());
             statement.setString(2, register.getLicensePlate());
@@ -103,7 +108,8 @@ public class Register {
             statement.setString(4, register.getMark());
             statement.setString(5, register.getType());
             statement.setInt(6, register.getEmployee().getId());
-            statement.setInt(7, register.getId());
+            statement.setDouble(7, pay);
+            statement.setInt(8, register.getId());
             statement.execute();
             
             result = statement.getUpdateCount()==1;
@@ -119,7 +125,7 @@ public class Register {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "DELETE FROM register WHERE id= ?";
+            String query = "DELETE FROM Register WHERE id= ?";
             PreparedStatement statement= conexion.prepareStatement(query);
             statement.setInt(1, id);
             statement.execute();
@@ -137,7 +143,7 @@ public class Register {
         Register register = null;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "SELECT * FROM register WHERE id = ?";
+            String query = "SELECT * FROM Register WHERE id = ?";
             PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -151,7 +157,7 @@ public class Register {
                 // Puedes cargar el resto de los atributos si es necesario
                 register.setStand(stand);
                 
-                register.setLicensePlate(resultSet.getString("license_plate"));
+                register.setLicensePlate(resultSet.getString("licensePlate"));
                 register.setDataTime(resultSet.getDate("date_time"));
                 register.setMark(resultSet.getString("mark"));
                 register.setType(resultSet.getString("type"));
@@ -160,6 +166,8 @@ public class Register {
                 employee.setId(resultSet.getInt("id_employee"));
                 // Puedes cargar el resto de los atributos si es necesario
                 register.setEmployee(employee);
+                
+                register.setPay(resultSet.getDouble("pay"));
             }
 
             conexion.close();
@@ -171,6 +179,18 @@ public class Register {
     
     
     public Register() {
+    }
+    
+    public Register(String licensePlate, Date dataTime, String mark, String type, int id_Stand, int id_employee, double pay) {
+    this.licensePlate= licensePlate;
+    this.dataTime = dataTime;
+    this.mark = mark;
+    this.type = type;
+    this.stand=new Stand();
+    this.stand.setId(id_Stand);
+    this.employee = new Employee();
+    this.employee.setId(id_employee);
+    this.pay = pay;
     }
     
     
@@ -229,6 +249,14 @@ public class Register {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public double getPay() {
+        return pay;
+    }
+
+    public void setPay(double pay) {
+        this.pay = pay;
     }
     
     

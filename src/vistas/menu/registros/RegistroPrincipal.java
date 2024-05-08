@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas.menu.empleados;
+package vistas.menu.registros;
 
-import entities.Employee;
-import vistas.menu.empleados.EmpleadosAgregar;
+import entities.Register;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -14,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import vistas.estilos.DegradedPanel;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,19 +24,18 @@ import vistas.menu.menu;
  *
  * @author vagui
  */
-public class EmpleadosPrincipal extends javax.swing.JFrame {
+public class RegistroPrincipal extends javax.swing.JFrame {
 
-    Employee employee;
-    Employee employee1 = new Employee();
+    Register register;
 
-    private EmpleadosPrincipal frmEmpleadosPrincipal;
+    private RegistroPrincipal frmClientePrincipal;
 
     /**
-     * Creates new form EmpleadosPrincipal
+     * Creates new form casetasPrincipal
      */
-    public EmpleadosPrincipal() {
+    public RegistroPrincipal() {
         initComponents();
-        configurarBoton(btnAgregar);
+        configurarBoton(btnAdd);
         configurarBoton(btnBuscar);
         configurarBoton(btnRegresar);
         configurarBoton(btnEliminar);
@@ -44,8 +43,8 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
-        model.setColumnIdentifiers(new Object[]{"name", "degree", "salary", "stand", "user", "password"});
+        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
+        model.setColumnIdentifiers(new Object[]{"caseta", "placa", "fecha", "marca", "tipo", "empleado", "pago"});
         llenarTabla("");
     }
 
@@ -54,22 +53,22 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
     }
 
     public void llenarTabla(String filtro) {
-     
-        List<Employee> resultados = Employee.getAll(filtro);
-        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
+        List<Register> resultados = Register.getAll(filtro);
+        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
-        for (Employee e : resultados) {
+        for (Register r : resultados) {
             Object[] rowData = {
-                e.getName(),
-                e.getDegree(),
-                e.getSalary(),
-                e.getStand().getId(),
-                e.getUser(),
-                e.getPassword()
+                r.getStand().getId(),
+                r.getLicensePlate(),
+                r.getDataTime(),
+                r.getMark(),
+                r.getType(),
+                r.getEmployee().getName(),
+                r.getPay()
             };
             model.addRow(rowData);
         }
-    tblEmpleados.setModel(model);
+        tblRegistros.setModel(model);
     }
 
     private void configurarBoton(JButton boton) {
@@ -123,15 +122,12 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         txfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblEmpleados = new javax.swing.JTable();
-        btnAgregar = new javax.swing.JButton();
+        tblRegistros = new javax.swing.JTable();
+        btnAdd = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -142,7 +138,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("EMPLEADOS");
+        jLabel2.setText("REGISTROS");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
@@ -154,8 +150,6 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("REGRESAR");
-
         txfBuscar.setText("BUSCAR");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/lupa.png"))); // NOI18N
@@ -166,7 +160,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
             }
         });
 
-        tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+        tblRegistros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -185,17 +179,18 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblEmpleadosMouseClicked(evt);
+                tblRegistrosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblEmpleados);
+        jScrollPane1.setViewportView(tblRegistros);
 
-        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia copia.png"))); // NOI18N
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -205,10 +200,6 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-
-        jLabel4.setText("Agregar Usuario");
-
-        jLabel5.setText("Eliminar Usuario");
 
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cerca.png"))); // NOI18N
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -222,74 +213,67 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(183, 183, 183)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnRegresar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegresar)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(370, 370, 370)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(380, 380, 380)
-                        .addComponent(btnAgregar))
+                        .addGap(131, 131, 131)
+                        .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(360, 360, 360)
-                        .addComponent(jLabel4))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5)))
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAgregar)
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel4))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel5))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(239, 239, 239)
-                .addComponent(btnRegresar)
-                .addGap(0, 0, 0)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(194, 194, 194)
+                        .addComponent(btnRegresar)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -308,7 +292,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        menu frmMenu = new menu(employee);
+        menu frmMenu = new menu();
         frmMenu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
@@ -318,90 +302,84 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        EmpleadosAgregar frmEmpleadoAgregar = new EmpleadosAgregar();
-        frmEmpleadoAgregar.setVisible(true);
+        RegistroAgregar frmAgregarRegistro = new RegistroAgregar();
+        frmAgregarRegistro.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         String filtro = txfBuscar.getText();
-        List<Employee> resultados = Employee.getAll(filtro);
+        List<Register> resultados = Register.getAll(filtro);
 
-        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
 
-        for (Employee e : resultados) {
+        for (Register r : resultados) {
             Object[] rowData = {
-                e.getName(),
-                e.getDegree(),
-                e.getSalary(),
-                e.getStand()
+                r.getStand().getId(),
+                r.getLicensePlate(),
+                r.getDataTime(),
+                r.getMark(),
+                r.getType(),
+                r.getEmployee().getName(),
+                r.getPay()
             };
             model.addRow(rowData);
             llenarTabla(filtro);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void tblEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpleadosMouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-            int row = tblEmpleados.getSelectedRow();
-
-            if (row != -1) {
-                String nombre = (String) tblEmpleados.getValueAt(row, 0);
-                String puesto = (String) tblEmpleados.getValueAt(row, 1);
-                double salario = (double) tblEmpleados.getValueAt(row, 2);
-                int idCaseta = (int) tblEmpleados.getValueAt(row, 3);
-                String user = (String) tblEmpleados.getValueAt(row, 4);
-                String password = (String) tblEmpleados.getValueAt(row, 5);
-
-                Employee employee = new Employee(nombre, puesto, salario, idCaseta, user, password);
-                EmpleadosAgregar frmEmpleadoAgregar = new EmpleadosAgregar(employee);
-                frmEmpleadoAgregar.setVisible(true);
-                this.dispose();
-            }
-
-        }
-
-
-    }//GEN-LAST:event_tblEmpleadosMouseClicked
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:// Obtener el índice de la fila seleccionada en la tabla
-        // Obtener el índice de la fila seleccionada en la tabla
-        int selectedRow = tblEmpleados.getSelectedRow();
+        // TODO add your handling code here:
+        int selectedRow = tblRegistros.getSelectedRow();
 
         if (selectedRow != -1) {
-            // Obtener el nombre del empleado seleccionado en la tabla
-            String name = (String) tblEmpleados.getValueAt(selectedRow, 0);
-
-            // Mostrar un cuadro de diálogo de confirmación para verificar si el usuario desea eliminar el empleado
-            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar al empleado: " + name + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
+            String licensePlate = (String) tblRegistros.getValueAt(selectedRow, 0);
+            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el registro del vehiculo: " + licensePlate + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                // Crear una instancia de la clase Employee
-                Employee employee = new Employee();
+                Register register = new Register();
+                int id = Register.getAll(licensePlate).get(0).getId();
 
-                // Obtener el ID del empleado seleccionado en la tabla
-                int id = Employee.getAll(name).get(0).getId();
+                if (register.delete(id)) {
+                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente");
 
-                // Eliminar el registro de la base de datos utilizando la instancia
-                if (employee.delete(id)) {
-                    JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente");
-
-                    // Actualizar la tabla en la ventana principal
-                    if (frmEmpleadosPrincipal != null) {
-                        frmEmpleadosPrincipal.actualizarTabla();
+                    if (frmClientePrincipal != null) {
+                        frmClientePrincipal.actualizarTabla();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el empleado");
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el registro");
                 }
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tblRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRegistrosMouseClicked
+        // TODO add your handling code here:
+
+        if (evt.getClickCount() == 2) {
+            int row = tblRegistros.getSelectedRow();
+
+            if (row != -1) {
+                int id_stand = (int) tblRegistros.getValueAt(row, 0);
+                String licensePlate = (String) tblRegistros.getValueAt(row, 1);
+                Date dataTime = (Date) tblRegistros.getValueAt(row, 2);
+                String mark = (String) tblRegistros.getValueAt(row, 3);
+                String type = (String) tblRegistros.getValueAt(row, 4);
+                int id_employee = (int) tblRegistros.getValueAt(row, 5);
+                double pay = (double) tblRegistros.getValueAt(row, 6);
+
+                Register register = new Register(id_stand, licensePlate, dataTime, mark, type, id_employee, pay);
+                RegistroAgregar frmAgregarRegistro = new RegistroAgregar(register);
+                frmAgregarRegistro.setVisible(true);
+                this.dispose();
+            }
+        }
+        
+
+    }//GEN-LAST:event_tblRegistrosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -420,38 +398,38 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EmpleadosPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EmpleadosPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EmpleadosPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EmpleadosPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmpleadosPrincipal().setVisible(true);
+                new RegistroPrincipal().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblEmpleados;
+    private javax.swing.JTable tblRegistros;
     private javax.swing.JTextField txfBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -81,8 +81,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jComboBox1" pref="147" max="32767" attributes="0"/>
-                              <Component id="jTextField2" max="32767" attributes="0"/>
+                              <Component id="cmbVehiculo" pref="147" max="32767" attributes="0"/>
+                              <Component id="txfPlaca" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -93,7 +93,7 @@
                                       <Component id="jLabel7" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="txfMarca" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel11" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
@@ -137,14 +137,14 @@
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbVehiculo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfMarca" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txfPlaca" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -201,6 +201,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txfDate">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="text" type="java.lang.String" value="03 de mayo de 2024 09:32AM"/>
           </Properties>
         </Component>
@@ -252,7 +253,7 @@
             <Property name="text" type="java.lang.String" value="VEHICULO:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="cmbVehiculo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -275,7 +276,7 @@
             <Property name="text" type="java.lang.String" value="MARCA:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txfMarca">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -285,7 +286,7 @@
             <Property name="text" type="java.lang.String" value="PLACA:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txfPlaca">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
