@@ -26,8 +26,7 @@ import vistas.menu.menu;
  */
 public class EmpleadosPrincipal extends javax.swing.JFrame {
 
-    Employee employee;
-    Employee employee1 = new Employee();
+    private Employee employee;
 
     private EmpleadosPrincipal frmEmpleadosPrincipal;
 
@@ -36,9 +35,9 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
      */
     public EmpleadosPrincipal() {
         initComponents();
+        this.employee = employee;
         configurarBoton(btnAgregar);
         configurarBoton(btnBuscar);
-        configurarBoton(btnRegresar);
         configurarBoton(btnEliminar);
         configurarBoton(btnExit);
         setLocationRelativeTo(null);
@@ -48,13 +47,24 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         model.setColumnIdentifiers(new Object[]{"name", "degree", "salary", "stand", "user", "password"});
         llenarTabla("");
     }
+    
+    public EmpleadosPrincipal(Employee employe){
+        initComponents();
+        this.employee = employee;
+        configurarBoton(btnAgregar);
+        configurarBoton(btnBuscar);
+        configurarBoton(btnEliminar);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 
     public void actualizarTabla() {
         llenarTabla("");
     }
 
     public void llenarTabla(String filtro) {
-     
+
         List<Employee> resultados = Employee.getAll(filtro);
         DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
@@ -69,7 +79,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
             };
             model.addRow(rowData);
         }
-    tblEmpleados.setModel(model);
+        tblEmpleados.setModel(model);
     }
 
     private void configurarBoton(JButton boton) {
@@ -122,7 +132,6 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         jPanel1 = new DegradedPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -134,7 +143,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
@@ -145,14 +154,6 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
         jLabel2.setText("EMPLEADOS");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
-
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
-        btnRegresar.setOpaque(true);
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("REGRESAR");
 
@@ -235,10 +236,8 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegresar)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,9 +285,7 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(239, 239, 239)
-                .addComponent(btnRegresar)
-                .addGap(0, 0, 0)
+                .addGap(315, 315, 315)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -305,13 +302,6 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        menu frmMenu = new menu();
-        frmMenu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
 
@@ -443,7 +433,6 @@ public class EmpleadosPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

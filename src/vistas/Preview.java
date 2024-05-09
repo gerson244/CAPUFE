@@ -4,7 +4,6 @@
  */
 package vistas;
 
-import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -13,10 +12,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import vistas.cliente.loginCliente;
 import vistas.estilos.DegradedPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import vistas.menu.clientes.ClienteLogin;
+
+
 
 /**
  *
@@ -95,7 +94,7 @@ public class Preview extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(220, 225, 201));
@@ -210,7 +209,7 @@ public class Preview extends javax.swing.JFrame {
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
-        ClienteLogin frmLoginCliente = new ClienteLogin();
+        loginCliente frmLoginCliente = new loginCliente();
         frmLoginCliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed

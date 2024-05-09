@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas.menu.clientes;
+package vistas.cliente;
 
+import Encryption.Encoder;
 import vistas.menu.clientes.*;
 import entities.Customer;
 import javax.swing.JButton;
@@ -19,21 +20,19 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author 
+ * @author
  */
-public class ClienteAgregar extends javax.swing.JFrame {
-   
-
+public class ClienteAgregarPreview extends javax.swing.JFrame {
+    private Encryption.Encoder mEncoder;
     Customer customer;
     private clientePrincipal frmClientePrincipal;
-    
-
 
     /**
      * Creates new form NewJFrame
      */
-    public ClienteAgregar() {
+    public ClienteAgregarPreview() {
         initComponents();
+        mEncoder = new Encoder();
         configurarBoton(btnAgregar);
         configurarBoton(btnExit);
         setLocationRelativeTo(null);
@@ -41,7 +40,7 @@ public class ClienteAgregar extends javax.swing.JFrame {
 
     }
 
-    public ClienteAgregar(clientePrincipal frmClientePrincipal){
+    public ClienteAgregarPreview(clientePrincipal frmClientePrincipal) {
         initComponents();
         this.frmClientePrincipal = frmClientePrincipal;
         configurarBoton(btnAgregar);
@@ -49,21 +48,23 @@ public class ClienteAgregar extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
-     public ClienteAgregar(clientePrincipal frmClientePrincipal, Customer customer){
-         initComponents();
-         this.frmClientePrincipal = frmClientePrincipal;
-         this.customer =customer;
-         if(customer != null){
-             cargarDatosCustomer();
-         }
-     }
-     
-     private void cargarDatosCustomer(){
-         txfNombre.setText(customer.getName());
-         txfDirection.setText(customer.getDirection());
-         txfPhone.setText(customer.getPhone());
-     }
+
+    public ClienteAgregarPreview(clientePrincipal frmClientePrincipal, Customer customer) {
+        initComponents();
+        this.frmClientePrincipal = frmClientePrincipal;
+        this.customer = customer;
+        if (customer != null) {
+            cargarDatosCustomer();
+        }
+    }
+
+    private void cargarDatosCustomer() {
+        txfNombre.setText(customer.getName());
+        txfDirection.setText(customer.getDirection());
+        txfPhone.setText(customer.getPhone());
+        txfUserCliente.setText(customer.getUser());
+        txfContrasena.setText(customer.getPassword());
+    }
 
     private void configurarBoton(JButton boton) {
         boton.setUI(new CustomButtonUI()); // Establece el ButtonUI personalizado
@@ -280,23 +281,25 @@ public class ClienteAgregar extends javax.swing.JFrame {
         String name = txfNombre.getText();
         String direction = txfDirection.getText();
         String phone = txfPhone.getText();
-        
-        Customer newCustomer = new Customer(name, direction, phone);
-        if(newCustomer.save(newCustomer)){
+        String user = txfUserCliente.getText();
+        String password = (mEncoder.ecnode(txfContrasena.getText()));
+
+        Customer newCustomer = new Customer(name, direction, phone, user, password);
+        if (newCustomer.save(newCustomer)) {
             JOptionPane.showMessageDialog(null, "Cliente agregado correctamente");
-            
-            if(frmClientePrincipal != null){
+
+            if (frmClientePrincipal != null) {
                 frmClientePrincipal.actualizarTabla();
-                
+
             }
-            clientePrincipal frmCliemte = new clientePrincipal();
-            frmCliemte.setVisible(true);
+            loginCliente frmLoginCliente = new loginCliente();
+            frmLoginCliente.setVisible(true);
             this.dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Error al guardar cliente");
         }
-        clientePrincipal frmCliemte = new clientePrincipal();
-        frmCliemte.setVisible(true);
+        loginCliente frmLoginCliente = new loginCliente();
+        frmLoginCliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -317,13 +320,13 @@ public class ClienteAgregar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -345,7 +348,7 @@ public class ClienteAgregar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteAgregar().setVisible(true);
+                new ClienteAgregarPreview().setVisible(true);
             }
         });
     }

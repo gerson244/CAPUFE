@@ -4,17 +4,78 @@
  */
 package vistas.menu.registros;
 
+import entities.Employee;
+import entities.Register;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author vagui
  */
 public class RegistroAgregar extends javax.swing.JFrame {
 
+    Register register;
+    private RegistroPrincipal frmRegistroPrincipal;
+    Employee employee;
+
     /**
      * Creates new form RegistroAgregar
      */
     public RegistroAgregar() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        mostrarCaseta();
+        mostrarEmpleado();
+        mostrarFecha();
+    }
+
+    public RegistroAgregar(RegistroPrincipal frmRegistroPrincipal) {
+        initComponents();
+        this.frmRegistroPrincipal = frmRegistroPrincipal;
+        this.setLocationRelativeTo(null);
+        mostrarCaseta();
+        mostrarEmpleado();
+        mostrarFecha();
+    }
+
+    public RegistroAgregar(RegistroPrincipal frmRegistroPrincipal, Register register) {
+        initComponents();
+        this.frmRegistroPrincipal = frmRegistroPrincipal;
+        this.register = register;
+        if (register != null) {
+            cargarDatosregister();
+            mostrarCaseta();
+            mostrarEmpleado();
+            mostrarFecha();
+            
+        }
+        
+    }
+
+    private void cargarDatosregister() {
+        txfDate.setText(String.valueOf(register.getDataTime()));
+        txfMarca.setText(register.getMark());
+        txfPlaca.setText(register.getType());
+        lblNombreEmpleado.setText(register.getEmployee().getName());
+        //lblUbicacionCaseta.setText(register.getEmployee().getStand().getLocation());
+    }
+
+    private void mostrarFecha() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String formattedDate = dateFormat.format(date);
+        txfDate.setText(formattedDate);
+    }
+    
+    private void mostrarEmpleado(){
+        String nombreEmpleado = register.getEmployee().getName();
+        lblNombreEmpleado.setText(nombreEmpleado);
+    }
+    
+    private void mostrarCaseta(){
+        String nameStand = register.getEmployee().getStand().getLocation();
+        lblUbicacionCaseta.setText(nameStand);
     }
 
     /**
@@ -28,7 +89,6 @@ public class RegistroAgregar extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnExit = new javax.swing.JButton();
-        btnRegresar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         txfDate = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -37,11 +97,11 @@ public class RegistroAgregar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lblUbicacionCaseta = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbVehiculo = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txfMarca = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txfPlaca = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         lblIVA = new javax.swing.JLabel();
         lblSubtotal = new javax.swing.JLabel();
@@ -60,13 +120,6 @@ public class RegistroAgregar extends javax.swing.JFrame {
             }
         });
 
-        btnRegresar.setText("Regresar");
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
-
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +127,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
             }
         });
 
+        txfDate.setEditable(false);
         txfDate.setText("03 de mayo de 2024 09:32AM");
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -94,7 +148,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("VEHICULO:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("MARCA:");
@@ -134,8 +188,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -160,8 +213,8 @@ public class RegistroAgregar extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, 147, Short.MAX_VALUE)
-                            .addComponent(jTextField2))
+                            .addComponent(cmbVehiculo, 0, 147, Short.MAX_VALUE)
+                            .addComponent(txfPlaca))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,7 +223,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
                                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(19, 19, 19))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -202,13 +255,13 @@ public class RegistroAgregar extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -219,9 +272,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(lblTotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegresar)
-                    .addComponent(btnGuardar))
+                .addComponent(btnGuardar)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -249,16 +300,15 @@ public class RegistroAgregar extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        Registros frmRegistros = new Registros();
-        frmRegistros.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        Registros frmRegistros = new Registros();
+
+        String licensePlate = txfPlaca.getText();
+        String dataTime = txfDate.getText();
+        String mark = txfMarca.getText();
+        String type = (String) cmbVehiculo.getSelectedItem();
+
+        RegistroPrincipal frmRegistros = new RegistroPrincipal();
         frmRegistros.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -301,8 +351,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbVehiculo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -313,13 +362,13 @@ public class RegistroAgregar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblIVA;
     private javax.swing.JLabel lblNombreEmpleado;
     private javax.swing.JLabel lblSubtotal;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblUbicacionCaseta;
     private javax.swing.JTextField txfDate;
+    private javax.swing.JTextField txfMarca;
+    private javax.swing.JTextField txfPlaca;
     // End of variables declaration//GEN-END:variables
 }

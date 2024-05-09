@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas.menu.casetas;
+package vistas.menu.clientes;
 
-import entities.Stand;
+import entities.Customer;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -17,19 +17,21 @@ import vistas.estilos.DegradedPanel;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vistas.menu.menu;
 
 /**
  *
  * @author vagui
  */
-public class casetasPrincipal extends javax.swing.JFrame {
+public class clientePrincipal extends javax.swing.JFrame {
+    
+    private clientePrincipal frmClientePrincipal;
 
-    private casetasPrincipal frmCasetasPrincipal;
-
+    
     /**
      * Creates new form casetasPrincipal
      */
-    public casetasPrincipal() {
+    public clientePrincipal() {
         initComponents();
         configurarBoton(btnAdd);
         configurarBoton(btnBuscar);
@@ -38,8 +40,8 @@ public class casetasPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        DefaultTableModel model = (DefaultTableModel) tblCasetas.getModel();
-        model.setColumnIdentifiers(new Object[]{"name", "location"});
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        model.setColumnIdentifiers(new Object[]{"name", "direction", "phone"});
         llenarTabla("");
     }
 
@@ -48,17 +50,18 @@ public class casetasPrincipal extends javax.swing.JFrame {
     }
 
     public void llenarTabla(String filtro) {
-        List<Stand> resultados = Stand.getAll(filtro);
-        DefaultTableModel model = (DefaultTableModel) tblCasetas.getModel();
+        List<Customer> resultados = Customer.getAll(filtro);
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
         model.setRowCount(0);
-        for (Stand s : resultados) {
+        for (Customer c : resultados) {
             Object[] rowData = {
-                s.getName(),
-                s.getLocation()
+                c.getName(),
+                c.getDirection(),
+                c.getPhone()
             };
             model.addRow(rowData);
         }
-        tblCasetas.setModel(model);
+        tblClientes.setModel(model);
     }
 
     private void configurarBoton(JButton boton) {
@@ -114,7 +117,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
         txfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCasetas = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -129,7 +132,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CASETAS");
+        jLabel2.setText("CLIENTES");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
@@ -143,7 +146,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
             }
         });
 
-        tblCasetas.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -162,12 +165,12 @@ public class casetasPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblCasetas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCasetasMouseClicked(evt);
+                tblClientesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblCasetas);
+        jScrollPane1.setViewportView(tblClientes);
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia copia.png"))); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -204,14 +207,13 @@ public class casetasPrincipal extends javax.swing.JFrame {
                         .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(193, 193, 193)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(131, 131, 131)
                                 .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +232,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel5))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,23 +290,24 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        CasetaAgregar frmAddCaseta = new CasetaAgregar();
-        frmAddCaseta.setVisible(true);
+        ClienteAgregar frmAgregarCliente = new ClienteAgregar();
+        frmAgregarCliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         String filtro = txfBuscar.getText();
-        List<Stand> resultados = Stand.getAll(filtro);
+        List<Customer> resultados = Customer.getAll(filtro);
 
-        DefaultTableModel model = (DefaultTableModel) tblCasetas.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
         model.setRowCount(0);
 
-        for (Stand s : resultados) {
+        for (Customer c : resultados) {
             Object[] rowData = {
-                s.getName(),
-                s.getLocation()
+                c.getName(),
+                c.getDirection(),
+                c.getPhone()
             };
             model.addRow(rowData);
             llenarTabla(filtro);
@@ -313,43 +316,47 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int selectedRow = tblCasetas.getSelectedRow();
+        int selectedRow = tblClientes.getSelectedRow();
 
         if (selectedRow != -1) {
-            String name = (String) tblCasetas.getValueAt(selectedRow, 0);
-            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar la caseta: " + name + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            String name = (String) tblClientes.getValueAt(selectedRow, 0);
+            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el cliente: " + name + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                Stand stand = new Stand();
-                int id = Stand.getAll(name).get(0).getId();
-                if (stand.delete(id)) {
-                    JOptionPane.showMessageDialog(null, "Caseta eliminada correctamente");
+                Customer customer = new Customer();
+                int id = Customer.getAll(name).get(0).getId();
+            int result = customer.delete(id); // Obtiene el número de filas afectadas
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
 
-                    if (frmCasetasPrincipal != null) {
-                        frmCasetasPrincipal.actualizarTabla();
+                    if (frmClientePrincipal != null) {
+                        frmClientePrincipal.actualizarTabla();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al eliminar la caseta");
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente");
                 }
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void tblCasetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCasetasMouseClicked
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
         // TODO add your handling code here:
+        
         if (evt.getClickCount() == 2) {
-            int row = tblCasetas.getSelectedRow();
+            int row = tblClientes.getSelectedRow();
 
             if (row != -1) {
-                String name = (String) tblCasetas.getValueAt(row, 0);
-                String location = (String) tblCasetas.getValueAt(row, 1);
+                String name = (String) tblClientes.getValueAt(row, 0);
+                String direction = (String) tblClientes.getValueAt(row, 1);
+                String phone = (String) tblClientes.getValueAt(row, 2);
 
-                Stand stand = new Stand(name, location);
-                CasetaAgregar frmAgregarCaseta = new CasetaAgregar(frmCasetasPrincipal,stand);
-                frmAgregarCaseta.setVisible(true);
+                Customer customer = new Customer(name, direction, phone);
+                ClienteAgregar frmAgregarCliente = new ClienteAgregar(frmClientePrincipal,customer);
+                frmAgregarCliente.setVisible(true);
                 this.dispose();
             }
         }
-    }//GEN-LAST:event_tblCasetasMouseClicked
+        
+    }//GEN-LAST:event_tblClientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -368,23 +375,21 @@ public class casetasPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clientePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new casetasPrincipal().setVisible(true);
+                new clientePrincipal().setVisible(true);
             }
         });
     }
@@ -400,7 +405,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblCasetas;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txfBuscar;
     // End of variables declaration//GEN-END:variables
 }

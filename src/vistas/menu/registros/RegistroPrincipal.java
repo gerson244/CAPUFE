@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas.menu.casetas;
+package vistas.menu.registros;
 
-import entities.Stand;
+import entities.Employee;
+import entities.Register;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -13,24 +14,30 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import vistas.estilos.DegradedPanel;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import vistas.menu.menu;
 
 /**
  *
  * @author vagui
  */
-public class casetasPrincipal extends javax.swing.JFrame {
+public class RegistroPrincipal extends javax.swing.JFrame {
 
-    private casetasPrincipal frmCasetasPrincipal;
+    Register register;
+    Employee employee;
+
+    private RegistroPrincipal frmRegistroPrincipal;
 
     /**
      * Creates new form casetasPrincipal
      */
-    public casetasPrincipal() {
+    public RegistroPrincipal() {
         initComponents();
+        this.employee=employee;
         configurarBoton(btnAdd);
         configurarBoton(btnBuscar);
         configurarBoton(btnEliminar);
@@ -38,27 +45,43 @@ public class casetasPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        DefaultTableModel model = (DefaultTableModel) tblCasetas.getModel();
-        model.setColumnIdentifiers(new Object[]{"name", "location"});
+        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
+        model.setColumnIdentifiers(new Object[]{"caseta", "placa", "fecha", "marca", "tipo", "empleado", "pago"});
         llenarTabla("");
     }
-
+    
+    public RegistroPrincipal(Employee employee) {
+        initComponents();
+        this.employee=employee;
+        configurarBoton(btnAdd);
+        configurarBoton(btnBuscar);
+        configurarBoton(btnEliminar);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    
     public void actualizarTabla() {
         llenarTabla("");
     }
 
     public void llenarTabla(String filtro) {
-        List<Stand> resultados = Stand.getAll(filtro);
-        DefaultTableModel model = (DefaultTableModel) tblCasetas.getModel();
+        List<Register> resultados = Register.getAll(filtro);
+        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
-        for (Stand s : resultados) {
+        for (Register r : resultados) {
             Object[] rowData = {
-                s.getName(),
-                s.getLocation()
+                r.getStand().getId(),
+                r.getLicensePlate(),
+                r.getDataTime(),
+                r.getMark(),
+                r.getType(),
+                r.getEmployee().getName(),
+                r.getPay()
             };
             model.addRow(rowData);
         }
-        tblCasetas.setModel(model);
+        tblRegistros.setModel(model);
     }
 
     private void configurarBoton(JButton boton) {
@@ -114,11 +137,9 @@ public class casetasPrincipal extends javax.swing.JFrame {
         txfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCasetas = new javax.swing.JTable();
+        tblRegistros = new javax.swing.JTable();
         btnAdd = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -129,7 +150,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CASETAS");
+        jLabel2.setText("REGISTROS");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
@@ -143,7 +164,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
             }
         });
 
-        tblCasetas.setModel(new javax.swing.table.DefaultTableModel(
+        tblRegistros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -162,13 +183,14 @@ public class casetasPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblCasetas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblRegistros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblCasetasMouseClicked(evt);
+                tblRegistrosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblCasetas);
+        jScrollPane1.setViewportView(tblRegistros);
 
+        btnAdd.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia copia.png"))); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,10 +205,6 @@ public class casetasPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Agregar Caseta");
-
-        jLabel5.setText("Eliminar Caseta");
-
         btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cerca.png"))); // NOI18N
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,38 +217,29 @@ public class casetasPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(370, 370, 370)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(193, 193, 193)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(131, 131, 131)
+                        .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(370, 370, 370)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(360, 360, 360)
-                                .addComponent(jLabel4)))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,13 +247,14 @@ public class casetasPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
+                                .addGap(22, 22, 22)
                                 .addComponent(txfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(12, 12, 12)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -253,18 +263,14 @@ public class casetasPrincipal extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel4))
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel5))))
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,23 +294,28 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        CasetaAgregar frmAddCaseta = new CasetaAgregar();
-        frmAddCaseta.setVisible(true);
+        RegistroAgregar frmAgregarRegistro = new RegistroAgregar();
+        frmAgregarRegistro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         String filtro = txfBuscar.getText();
-        List<Stand> resultados = Stand.getAll(filtro);
+        List<Register> resultados = Register.getAll(filtro);
 
-        DefaultTableModel model = (DefaultTableModel) tblCasetas.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
 
-        for (Stand s : resultados) {
+        for (Register r : resultados) {
             Object[] rowData = {
-                s.getName(),
-                s.getLocation()
+                r.getStand().getId(),
+                r.getLicensePlate(),
+                r.getDataTime(),
+                r.getMark(),
+                r.getType(),
+                r.getEmployee().getName(),
+                r.getPay()
             };
             model.addRow(rowData);
             llenarTabla(filtro);
@@ -313,43 +324,52 @@ public class casetasPrincipal extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int selectedRow = tblCasetas.getSelectedRow();
+        int selectedRow = tblRegistros.getSelectedRow();
 
         if (selectedRow != -1) {
-            String name = (String) tblCasetas.getValueAt(selectedRow, 0);
-            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar la caseta: " + name + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            String licensePlate = (String) tblRegistros.getValueAt(selectedRow, 0);
+            int confirm = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar el registro del vehiculo: " + licensePlate + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                Stand stand = new Stand();
-                int id = Stand.getAll(name).get(0).getId();
-                if (stand.delete(id)) {
-                    JOptionPane.showMessageDialog(null, "Caseta eliminada correctamente");
+                Register register = new Register();
+                int id = Register.getAll(licensePlate).get(0).getId();
 
-                    if (frmCasetasPrincipal != null) {
-                        frmCasetasPrincipal.actualizarTabla();
+                if (register.delete(id)) {
+                    JOptionPane.showMessageDialog(null, "Registro eliminado correctamente");
+
+                    if (frmRegistroPrincipal != null) {
+                        frmRegistroPrincipal.actualizarTabla();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al eliminar la caseta");
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el registro");
                 }
             }
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void tblCasetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCasetasMouseClicked
+    private void tblRegistrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRegistrosMouseClicked
         // TODO add your handling code here:
+
         if (evt.getClickCount() == 2) {
-            int row = tblCasetas.getSelectedRow();
-
-            if (row != -1) {
-                String name = (String) tblCasetas.getValueAt(row, 0);
-                String location = (String) tblCasetas.getValueAt(row, 1);
-
-                Stand stand = new Stand(name, location);
-                CasetaAgregar frmAgregarCaseta = new CasetaAgregar(frmCasetasPrincipal,stand);
-                frmAgregarCaseta.setVisible(true);
+            int row = tblRegistros.getSelectedRow();
+            
+            if(row != -1){
+                String licensePlate = (String) tblRegistros.getValueAt(row, 0);
+                Date dataTime = (Date) tblRegistros.getValueAt(row, 1);
+                String mark = (String) tblRegistros.getValueAt(row, 2);
+                String type = (String) tblRegistros.getValueAt(row, 3);
+                int idCaseta = (int) tblRegistros.getValueAt(row, 4);
+                int idEmployee = (int) tblRegistros.getValueAt(row, 5);
+                double pay = (double) tblRegistros.getValueAt(row, 6);
+                
+                Register register =  new Register(licensePlate,dataTime,mark,type,idCaseta,idEmployee,pay);
+                RegistroAgregar frmAgregarRegistro = new RegistroAgregar(frmRegistroPrincipal,register);
+                frmAgregarRegistro.setVisible(true);
                 this.dispose();
             }
         }
-    }//GEN-LAST:event_tblCasetasMouseClicked
+
+
+    }//GEN-LAST:event_tblRegistrosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -368,13 +388,13 @@ public class casetasPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(casetasPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistroPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -384,7 +404,7 @@ public class casetasPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new casetasPrincipal().setVisible(true);
+                new RegistroPrincipal().setVisible(true);
             }
         });
     }
@@ -396,11 +416,9 @@ public class casetasPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblCasetas;
+    private javax.swing.JTable tblRegistros;
     private javax.swing.JTextField txfBuscar;
     // End of variables declaration//GEN-END:variables
 }
