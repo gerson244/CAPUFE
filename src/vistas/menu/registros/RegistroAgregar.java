@@ -4,7 +4,9 @@
  */
 package vistas.menu.registros;
 
+import entities.Employee;
 import entities.Register;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,22 +15,68 @@ import java.util.Date;
  */
 public class RegistroAgregar extends javax.swing.JFrame {
 
+    Register register;
+    private RegistroPrincipal frmRegistroPrincipal;
+    Employee employee;
+
     /**
      * Creates new form RegistroAgregar
      */
     public RegistroAgregar() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        mostrarCaseta();
+        mostrarEmpleado();
+        mostrarFecha();
     }
-    /*
-    public RegistroAgregar(Register register) {
-    initComponents();
-    // Configura los campos de la interfaz de usuario con los valores de register
-    txfPlaca.setText(register.getLicensePlate());
-    txfDate.setDate(register.getDataTime());
-    txfMarca.setText(register.getMark());
-    cmbVehiculo.setSelectedItem(register.getType());
-    // Configura los otros campos según sea necesario
-}*/
+
+    public RegistroAgregar(RegistroPrincipal frmRegistroPrincipal) {
+        initComponents();
+        this.frmRegistroPrincipal = frmRegistroPrincipal;
+        this.setLocationRelativeTo(null);
+        mostrarCaseta();
+        mostrarEmpleado();
+        mostrarFecha();
+    }
+
+    public RegistroAgregar(RegistroPrincipal frmRegistroPrincipal, Register register) {
+        initComponents();
+        this.frmRegistroPrincipal = frmRegistroPrincipal;
+        this.register = register;
+        if (register != null) {
+            cargarDatosregister();
+            mostrarCaseta();
+            mostrarEmpleado();
+            mostrarFecha();
+            
+        }
+        
+    }
+
+    private void cargarDatosregister() {
+        txfDate.setText(String.valueOf(register.getDataTime()));
+        txfMarca.setText(register.getMark());
+        txfPlaca.setText(register.getType());
+        lblNombreEmpleado.setText(register.getEmployee().getName());
+        //lblUbicacionCaseta.setText(register.getEmployee().getStand().getLocation());
+    }
+
+    private void mostrarFecha() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String formattedDate = dateFormat.format(date);
+        txfDate.setText(formattedDate);
+    }
+    
+    private void mostrarEmpleado(){
+        String nombreEmpleado = register.getEmployee().getName();
+        lblNombreEmpleado.setText(nombreEmpleado);
+    }
+    
+    private void mostrarCaseta(){
+        String nameStand = register.getEmployee().getStand().getLocation();
+        lblUbicacionCaseta.setText(nameStand);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,7 +89,6 @@ public class RegistroAgregar extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnExit = new javax.swing.JButton();
-        btnRegresar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         txfDate = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -70,13 +117,6 @@ public class RegistroAgregar extends javax.swing.JFrame {
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
-            }
-        });
-
-        btnRegresar.setText("Regresar");
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
             }
         });
 
@@ -148,8 +188,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -233,9 +272,7 @@ public class RegistroAgregar extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(lblTotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegresar)
-                    .addComponent(btnGuardar))
+                .addComponent(btnGuardar)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -263,15 +300,14 @@ public class RegistroAgregar extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        RegistroPrincipal frmRegistros = new RegistroPrincipal();
-        frmRegistros.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+
+        String licensePlate = txfPlaca.getText();
+        String dataTime = txfDate.getText();
+        String mark = txfMarca.getText();
+        String type = (String) cmbVehiculo.getSelectedItem();
+
         RegistroPrincipal frmRegistros = new RegistroPrincipal();
         frmRegistros.setVisible(true);
         this.dispose();
@@ -315,7 +351,6 @@ public class RegistroAgregar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbVehiculo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

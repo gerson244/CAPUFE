@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas.menu.casetas;
+package vistas.cliente;
 
-import entities.Stand;
-import javax.swing.JFrame;
+import Encryption.Encoder;
+import vistas.menu.clientes.*;
+import entities.Customer;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -15,52 +16,54 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author ricardorodriguez
+ * @author
  */
-public class CasetaAgregar extends javax.swing.JFrame {
-
-    Stand stand;
-    private casetasPrincipal frmCasetaPrincipal;
-    
+public class ClienteAgregarPreview extends javax.swing.JFrame {
+    private Encryption.Encoder mEncoder;
+    Customer customer;
+    private clientePrincipal frmClientePrincipal;
 
     /**
-     * Creates new form AgregarCaseta
+     * Creates new form NewJFrame
      */
-    public CasetaAgregar() {
+    public ClienteAgregarPreview() {
         initComponents();
+        mEncoder = new Encoder();
+        configurarBoton(btnAgregar);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+    }
+
+    public ClienteAgregarPreview(clientePrincipal frmClientePrincipal) {
+        initComponents();
+        this.frmClientePrincipal = frmClientePrincipal;
         configurarBoton(btnAgregar);
         configurarBoton(btnExit);
         setLocationRelativeTo(null);
         setVisible(true);
     }
-    
-    public CasetaAgregar(casetasPrincipal frmCasetaPrincipal){
+
+    public ClienteAgregarPreview(clientePrincipal frmClientePrincipal, Customer customer) {
         initComponents();
-        this.frmCasetaPrincipal = frmCasetaPrincipal;
-        configurarBoton(btnAgregar);
-        configurarBoton(btnExit);
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
-    
-    public CasetaAgregar(casetasPrincipal frmCasetaPrincipal, Stand stand){
-        initComponents();
-        this.frmCasetaPrincipal = frmCasetaPrincipal;
-        this.stand = stand;
-        if(stand != null){
-            cargarDatosStand();
+        this.frmClientePrincipal = frmClientePrincipal;
+        this.customer = customer;
+        if (customer != null) {
+            cargarDatosCustomer();
         }
     }
-    
-    private void cargarDatosStand(){
-        txfName.setText(stand.getName());
-        txfLocation.setText(stand.getLocation());
+
+    private void cargarDatosCustomer() {
+        txfNombre.setText(customer.getName());
+        txfDirection.setText(customer.getDirection());
+        txfPhone.setText(customer.getPhone());
+        txfUserCliente.setText(customer.getUser());
+        txfContrasena.setText(customer.getPassword());
     }
 
     private void configurarBoton(JButton boton) {
@@ -114,20 +117,28 @@ public class CasetaAgregar extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txfName = new javax.swing.JTextField();
-        txfLocation = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        txfNombre = new javax.swing.JTextField();
+        txfDirection = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblPhone = new javax.swing.JLabel();
+        txfPhone = new javax.swing.JTextField();
+        lblPhone1 = new javax.swing.JLabel();
+        txfUserCliente = new javax.swing.JTextField();
+        lblPhone2 = new javax.swing.JLabel();
+        txfContrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(220, 225, 201));
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("AGREGAR CASETA");
+        jLabel2.setText("AGREGAR CLIENTE");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
 
@@ -141,22 +152,10 @@ public class CasetaAgregar extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
+            .addGap(0, 610, Short.MAX_VALUE)
         );
 
-        txfName.setText("Nombre");
-        txfName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfNameActionPerformed(evt);
-            }
-        });
-
-        txfLocation.setText("Ubicacion");
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/guardia.png"))); // NOI18N
-        jLabel5.setText("jLabel5");
-
-        btnAgregar.setText("Agregar Caseta");
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/agregar-usuario.png"))); // NOI18N
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -170,44 +169,61 @@ public class CasetaAgregar extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("NOMBRE:");
+
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("DIRECCION:");
+
+        lblPhone.setForeground(new java.awt.Color(0, 0, 0));
+        lblPhone.setText("TELEFONO:");
+
+        lblPhone1.setForeground(new java.awt.Color(0, 0, 0));
+        lblPhone1.setText("USUARIO:");
+
+        lblPhone2.setForeground(new java.awt.Color(0, 0, 0));
+        lblPhone2.setText("CONTRASEÑA:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(74, 74, 74)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txfLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                    .addComponent(txfName))))
-                        .addContainerGap(27, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnAgregar)
-                                .addGap(61, 61, 61))
+                                .addGap(101, 101, 101))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(91, 91, 91))))))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txfContrasena)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txfNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfDirection, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addComponent(lblPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addComponent(lblPhone1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addComponent(txfUserCliente, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPhone2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(57, 57, 57)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -216,13 +232,27 @@ public class CasetaAgregar extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(txfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(txfLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPhone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPhone1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfUserCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPhone2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txfContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
                         .addComponent(btnAgregar)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -231,48 +261,45 @@ public class CasetaAgregar extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txfNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfNameActionPerformed
-
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
 
         this.dispose();
-
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        
-        String name = txfName.getText();
-        String location = txfLocation.getText();
-        
-        Stand newStand = new Stand(name,  location);
-        if(newStand.save(newStand)){
-            JOptionPane.showMessageDialog(null, "caseta guardada correctamente");
-            
-            if(frmCasetaPrincipal != null){
-                frmCasetaPrincipal.actualizarTabla();
+        String name = txfNombre.getText();
+        String direction = txfDirection.getText();
+        String phone = txfPhone.getText();
+        String user = txfUserCliente.getText();
+        String password = (mEncoder.ecnode(txfContrasena.getText()));
+
+        Customer newCustomer = new Customer(name, direction, phone, user, password);
+        if (newCustomer.save(newCustomer)) {
+            JOptionPane.showMessageDialog(null, "Cliente agregado correctamente");
+
+            if (frmClientePrincipal != null) {
+                frmClientePrincipal.actualizarTabla();
+
             }
-            casetasPrincipal frmCasetas = new casetasPrincipal();
-            frmCasetas.setVisible(true);
+            loginCliente frmLoginCliente = new loginCliente();
+            frmLoginCliente.setVisible(true);
             this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(null, "Error al guardar la caseta");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al guardar cliente");
         }
-        
-        casetasPrincipal frmCasetas = new casetasPrincipal();
-        frmCasetas.setVisible(true);
+        loginCliente frmLoginCliente = new loginCliente();
+        frmLoginCliente.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -293,14 +320,26 @@ public class CasetaAgregar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CasetaAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteAgregarPreview.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -309,7 +348,7 @@ public class CasetaAgregar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CasetaAgregar().setVisible(true);
+                new ClienteAgregarPreview().setVisible(true);
             }
         });
     }
@@ -319,10 +358,17 @@ public class CasetaAgregar extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txfLocation;
-    private javax.swing.JTextField txfName;
+    private javax.swing.JLabel lblPhone;
+    private javax.swing.JLabel lblPhone1;
+    private javax.swing.JLabel lblPhone2;
+    private javax.swing.JPasswordField txfContrasena;
+    private javax.swing.JTextField txfDirection;
+    private javax.swing.JTextField txfNombre;
+    private javax.swing.JTextField txfPhone;
+    private javax.swing.JTextField txfUserCliente;
     // End of variables declaration//GEN-END:variables
 }

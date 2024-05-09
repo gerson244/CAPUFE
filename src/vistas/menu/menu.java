@@ -5,7 +5,6 @@
 package vistas.menu;
 
 import entities.Employee;
-import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -15,12 +14,10 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import vistas.login;
 import vistas.menu.casetas.casetasPrincipal;
 import vistas.menu.clientes.clientePrincipal;
-import vistas.menu.empleados.EmpleadosAgregar;
 import vistas.menu.empleados.EmpleadosPrincipal;
 import vistas.menu.registros.RegistroPrincipal;
 
@@ -30,7 +27,7 @@ import vistas.menu.registros.RegistroPrincipal;
  */
 public class menu extends javax.swing.JFrame {
 
-    Employee employee;
+    private Employee employee;
 
     /**
      * Creates new form menu
@@ -62,7 +59,6 @@ public class menu extends javax.swing.JFrame {
         configurarBoton(jButton6);
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
 
     private void configurarBoton(JButton boton) {
@@ -124,7 +120,7 @@ public class menu extends javax.swing.JFrame {
         btnResgistro = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(220, 225, 201));
@@ -266,40 +262,31 @@ public class menu extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        menu frmMenu = new menu();
-        frmMenu.setVisible(true);
+        login frmlogin = new login();
+        frmlogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadoActionPerformed
         // TODO add your handling code here:
         if (this.employee != null) { // Verifica si this.employee no es null
-        // Ahora puedes llamar a los métodos de this.employee sin preocuparte por NullPointerException
-        if(this.employee.getDegree().equals("EMPLEADO")){
-            JOptionPane.showMessageDialog(null, "No tiebe privilegios para acceder a esta seccion");
+
+            System.out.println(employee.getName());
+            // Ahora puedes llamar a los métodos de this.employee sin preocuparte por NullPointerException
+            if (this.employee.getDegree().equals("EMPLEADO")) {
+                JOptionPane.showMessageDialog(null, "No tiebe privilegios para acceder a esta seccion");
+            } else {
+                EmpleadosPrincipal frmEmpleado = new EmpleadosPrincipal();
+                setVisible(true);
+                frmEmpleado.setVisible(true);
+                //this.dispose();
+            }
         } else {
-            EmpleadosPrincipal frmEmpleado = new EmpleadosPrincipal();
-            frmEmpleado.setVisible(true);
-            this.dispose();
+            // Manejar el caso en el que this.employee es null, por ejemplo, mostrar un mensaje de error o realizar alguna acción predeterminada
+            JOptionPane.showMessageDialog(null, "El objeto Employee es nulo");
         }
-    } else {
-        // Manejar el caso en el que this.employee es null, por ejemplo, mostrar un mensaje de error o realizar alguna acción predeterminada
-        JOptionPane.showMessageDialog(null, "El objeto Employee es nulo");
-    }
-        
-        
-        
-        
-        
-        /*
-        if (employee.getDegree().equals("EMPLEADO")) {
-            JOptionPane.showMessageDialog(null, "No tiene privilegios para acceder a esta seccion");
-        } else {
-            EmpleadosPrincipal frmEmpleado = new EmpleadosPrincipal();
-            frmEmpleado.setVisible(true);
-            //this.dispose();
-        }
-        */
+
+
     }//GEN-LAST:event_btnEmpleadoActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -309,31 +296,62 @@ public class menu extends javax.swing.JFrame {
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         // TODO add your handling code here:
-        if (employee.getDegree().equals("EMPLEADO")) {
-            JOptionPane.showMessageDialog(null, "No tiene privilegios para acceder a esta seccion");
+        if (this.employee != null) { // Verifica si this.employee no es null
+
+            System.out.println(employee.getName());
+            // Ahora puedes llamar a los métodos de this.employee sin preocuparte por NullPointerException
+            if (this.employee.getDegree().equals("EMPLEADO")) {
+                JOptionPane.showMessageDialog(null, "No tiebe privilegios para acceder a esta seccion");
+            } else {
+                clientePrincipal frmClientePricipal = new clientePrincipal();
+                setVisible(true);
+                frmClientePricipal.setVisible(true);
+                //this.dispose();
+            }
         } else {
-            clientePrincipal frmCliente = new clientePrincipal();
-            frmCliente.setVisible(true);
-            this.dispose();
+            // Manejar el caso en el que this.employee es null, por ejemplo, mostrar un mensaje de error o realizar alguna acción predeterminada
+            JOptionPane.showMessageDialog(null, "El objeto Employee es nulo");
         }
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnCasetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCasetaActionPerformed
         // TODO add your handling code here:
-        if (employee.getDegree().equals("EMPLEADO")) {
-            JOptionPane.showMessageDialog(null, "No tiene privilegios para acceder a esta seccion");
+        if (this.employee != null) { // Verifica si this.employee no es null
+
+            System.out.println(employee.getName());
+            // Ahora puedes llamar a los métodos de this.employee sin preocuparte por NullPointerException
+            if (this.employee.getDegree().equals("EMPLEADO")) {
+                JOptionPane.showMessageDialog(null, "No tiebe privilegios para acceder a esta seccion");
+            } else {
+                casetasPrincipal frmCasetaPrincipal = new casetasPrincipal();
+                setVisible(true);
+                frmCasetaPrincipal.setVisible(true);
+                //this.dispose();
+            }
         } else {
-            casetasPrincipal frmCaseta = new casetasPrincipal();
-            frmCaseta.setVisible(true);
-            this.dispose();
+            // Manejar el caso en el que this.employee es null, por ejemplo, mostrar un mensaje de error o realizar alguna acción predeterminada
+            JOptionPane.showMessageDialog(null, "El objeto Employee es nulo");
         }
     }//GEN-LAST:event_btnCasetaActionPerformed
 
     private void btnResgistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistroActionPerformed
         // TODO add your handling code here:
-        RegistroPrincipal frmRegistro = new RegistroPrincipal();
-        frmRegistro.setVisible(true);
-        this.dispose();
+        if (this.employee != null) { // Verifica si this.employee no es null
+
+            System.out.println(employee.getName());
+            // Ahora puedes llamar a los métodos de this.employee sin preocuparte por NullPointerException
+            if (this.employee.getDegree().equals("EMPLEADO")) {
+                JOptionPane.showMessageDialog(null, "No tiebe privilegios para acceder a esta seccion");
+            } else {
+                RegistroPrincipal frmRegistroPrincipal = new RegistroPrincipal();
+                setVisible(true);
+                frmRegistroPrincipal.setVisible(true);
+                //this.dispose();
+            }
+        } else {
+            // Manejar el caso en el que this.employee es null, por ejemplo, mostrar un mensaje de error o realizar alguna acción predeterminada
+            JOptionPane.showMessageDialog(null, "El objeto Employee es nulo");
+        }
     }//GEN-LAST:event_btnResgistroActionPerformed
 
     /**

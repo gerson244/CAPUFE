@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.util.ArrayList;
@@ -13,10 +12,10 @@ import java.text.SimpleDateFormat;
 
 /**
  *
- * @author 
+ * @author
  */
 public class Register {
-    
+
     private int id;
     private String licensePlate = new String();
     private Date dataTime;
@@ -25,8 +24,7 @@ public class Register {
     private Stand stand;
     private Employee employee;
     private double pay;
-    
-    
+
     public static List<Register> getAll(String filtro) {
         List<Register> register = new ArrayList<>();
         try {
@@ -37,26 +35,23 @@ public class Register {
 
             while (resultSet.next()) {
                 Register r = new Register();
-                r.setId(resultSet.getInt("id"));   
-                
+                r.setId(resultSet.getInt("id"));
+
                 Stand stand = new Stand();
                 stand.setId(resultSet.getInt("id_stand"));
-                // Puedes cargar el resto de los atributos si es necesario
                 r.setStand(stand);
-                
-                r.setLicensePlate(resultSet.getString("licensePlate"));
-                r.setDataTime(resultSet.getDate("date_time"));
-                r.setMark(resultSet.getString("mark"));
-                r.setType(resultSet.getString("type"));
-                
-                
+
                 Employee employee = new Employee();
                 employee.setId(resultSet.getInt("id_employee"));
-                // Puedes cargar el resto de los atributos si es necesario
                 r.setEmployee(employee);
-                
+
+                r.setLicensePlate(resultSet.getString("licensePlate"));
+                r.setDataTime(resultSet.getDate("dataTime"));
+                r.setMark(resultSet.getString("mark"));
+                r.setType(resultSet.getString("type"));
+
                 r.setPay(resultSet.getDouble("Pay"));
-                
+
                 register.add(r);
             }
         } catch (SQLException ex) {
@@ -64,81 +59,82 @@ public class Register {
         }
         return register;
     }
-    
+
     public boolean save(Register register) {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "INSERT  INTO Register (id_stand, licensePlate, date_time, mark, type, id_employee, pay ) VALUES(?,?,?,?,?,?,?)";
+            String query = "INSERT INTO Register (id_stand, licensePlate, dataTime, mark, type, id_employee, pay ) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement statement = conexion.prepareStatement(query);
+
             statement.setInt(1, register.getStand().getId());
             statement.setString(2, register.getLicensePlate());
-            
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             statement.setString(3, dateFormat.format(register.getDataTime()));
-            
+
             statement.setString(4, register.getMark());
             statement.setString(5, register.getType());
             statement.setInt(6, register.getEmployee().getId());
             statement.setDouble(7, getPay());
-            
+
             statement.execute();
-            
-            result = statement.getUpdateCount()==1;
-            
+
+            result = statement.getUpdateCount() == 1;
+
             conexion.close();
         } catch (Exception ex) {
-            System.err.println("Error "+ex.getMessage());
+            System.err.println("Error " + ex.getMessage());
         }
         return result;
     }
-     
+
     public boolean update(Register register) {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
-            String query = "UPDATE Register SET id_stand=?, licensePlate=?, date_time=?, mark=?, type=?, id_employee=?, pay=? WHERE id=?";
-            PreparedStatement statement= conexion.prepareStatement(query);
+            String query = "UPDATE Register SET id_stand=?, licensePlate=?, dataTime=?, mark=?, type=?, id_employee=?, pay=? WHERE id=?";
+            PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, register.getStand().getId());
             statement.setString(2, register.getLicensePlate());
-            
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             statement.setString(3, dateFormat.format(register.getDataTime()));
-            
+
             statement.setString(4, register.getMark());
             statement.setString(5, register.getType());
             statement.setInt(6, register.getEmployee().getId());
             statement.setDouble(7, pay);
             statement.setInt(8, register.getId());
             statement.execute();
-            
-            result = statement.getUpdateCount()==1;
-            
+
+            result = statement.getUpdateCount() == 1;
+
             conexion.close();
         } catch (Exception ex) {
-            System.err.println("Error "+ex.getMessage());
+            System.err.println("Error " + ex.getMessage());
         }
         return result;
     }
-    
+
     public boolean delete(int id) {
         boolean result = false;
         try {
             Connection conexion = ConectorDB.get();
             String query = "DELETE FROM Register WHERE id= ?";
-            PreparedStatement statement= conexion.prepareStatement(query);
+            PreparedStatement statement = conexion.prepareStatement(query);
             statement.setInt(1, id);
             statement.execute();
-            
-            result = statement.getUpdateCount()==1;
-            
+
+            result = statement.getUpdateCount() == 1;
+
             conexion.close();
         } catch (Exception ex) {
-            System.err.println("Error "+ex.getMessage());
+            System.err.println("Error " + ex.getMessage());
         }
         return result;
     }
-    
+
     public static Register getById(int id) {
         Register register = null;
         try {
@@ -150,23 +146,19 @@ public class Register {
 
             if (resultSet.next()) {
                 register = new Register();
-                register.setId(resultSet.getInt("id"));   
-                
-                Stand stand = new Stand();
-                stand.setId(resultSet.getInt("id_stand"));
-                // Puedes cargar el resto de los atributos si es necesario
+                register.setId(resultSet.getInt("id"));
+
+                Stand stand = Stand.getById(resultSet.getInt("id_stand"));
                 register.setStand(stand);
-                
+
                 register.setLicensePlate(resultSet.getString("licensePlate"));
-                register.setDataTime(resultSet.getDate("date_time"));
+                register.setDataTime(resultSet.getDate("dataTime"));
                 register.setMark(resultSet.getString("mark"));
                 register.setType(resultSet.getString("type"));
-                
-                Employee employee = new Employee();
-                employee.setId(resultSet.getInt("id_employee"));
-                // Puedes cargar el resto de los atributos si es necesario
+
+                Employee employee = Employee.getById(resultSet.getInt("id_employee"));
                 register.setEmployee(employee);
-                
+
                 register.setPay(resultSet.getDouble("pay"));
             }
 
@@ -176,24 +168,21 @@ public class Register {
         }
         return register;
     }
-    
-    
+
     public Register() {
     }
-    
+
     public Register(String licensePlate, Date dataTime, String mark, String type, int id_Stand, int id_employee, double pay) {
-    this.licensePlate= licensePlate;
-    this.dataTime = dataTime;
-    this.mark = mark;
-    this.type = type;
-    this.stand=new Stand();
-    this.stand.setId(id_Stand);
-    this.employee = new Employee();
-    this.employee.setId(id_employee);
-    this.pay = pay;
+        this.licensePlate = licensePlate;
+        this.dataTime = dataTime;
+        this.mark = mark;
+        this.type = type;
+        this.stand = new Stand();
+        this.stand.setId(id_Stand);
+        this.employee = new Employee();
+        this.employee.setId(id_employee);
+        this.pay = pay;
     }
-    
-    
 
     public int getId() {
         return id;
@@ -235,14 +224,6 @@ public class Register {
         this.type = type;
     }
 
-    public Stand getStand() {
-        return stand;
-    }
-
-    public void setStand(Stand stand) {
-        this.stand = stand;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
@@ -258,7 +239,13 @@ public class Register {
     public void setPay(double pay) {
         this.pay = pay;
     }
-    
-    
-    
+
+    public Stand getStand() {
+        return stand;
+    }
+
+    public void setStand(Stand stand) {
+        this.stand = stand;
+    }
+
 }

@@ -4,6 +4,7 @@
  */
 package vistas.menu.registros;
 
+import entities.Employee;
 import entities.Register;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -27,17 +28,18 @@ import vistas.menu.menu;
 public class RegistroPrincipal extends javax.swing.JFrame {
 
     Register register;
+    Employee employee;
 
-    private RegistroPrincipal frmClientePrincipal;
+    private RegistroPrincipal frmRegistroPrincipal;
 
     /**
      * Creates new form casetasPrincipal
      */
     public RegistroPrincipal() {
         initComponents();
+        this.employee=employee;
         configurarBoton(btnAdd);
         configurarBoton(btnBuscar);
-        configurarBoton(btnRegresar);
         configurarBoton(btnEliminar);
         configurarBoton(btnExit);
         setLocationRelativeTo(null);
@@ -47,7 +49,18 @@ public class RegistroPrincipal extends javax.swing.JFrame {
         model.setColumnIdentifiers(new Object[]{"caseta", "placa", "fecha", "marca", "tipo", "empleado", "pago"});
         llenarTabla("");
     }
-
+    
+    public RegistroPrincipal(Employee employee) {
+        initComponents();
+        this.employee=employee;
+        configurarBoton(btnAdd);
+        configurarBoton(btnBuscar);
+        configurarBoton(btnEliminar);
+        configurarBoton(btnExit);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    
     public void actualizarTabla() {
         llenarTabla("");
     }
@@ -121,7 +134,6 @@ public class RegistroPrincipal extends javax.swing.JFrame {
         jPanel1 = new DegradedPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnRegresar = new javax.swing.JButton();
         txfBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -130,7 +142,7 @@ public class RegistroPrincipal extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
@@ -141,14 +153,6 @@ public class RegistroPrincipal extends javax.swing.JFrame {
         jLabel2.setText("REGISTROS");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo copia.png"))); // NOI18N
-
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/regreso.png"))); // NOI18N
-        btnRegresar.setOpaque(true);
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
 
         txfBuscar.setText("BUSCAR");
 
@@ -213,13 +217,8 @@ public class RegistroPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnRegresar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,9 +269,7 @@ public class RegistroPrincipal extends javax.swing.JFrame {
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(194, 194, 194)
-                        .addComponent(btnRegresar)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -289,13 +286,6 @@ public class RegistroPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        menu frmMenu = new menu();
-        frmMenu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
 
@@ -346,8 +336,8 @@ public class RegistroPrincipal extends javax.swing.JFrame {
                 if (register.delete(id)) {
                     JOptionPane.showMessageDialog(null, "Registro eliminado correctamente");
 
-                    if (frmClientePrincipal != null) {
-                        frmClientePrincipal.actualizarTabla();
+                    if (frmRegistroPrincipal != null) {
+                        frmRegistroPrincipal.actualizarTabla();
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al eliminar el registro");
@@ -361,23 +351,23 @@ public class RegistroPrincipal extends javax.swing.JFrame {
 
         if (evt.getClickCount() == 2) {
             int row = tblRegistros.getSelectedRow();
-
-            if (row != -1) {
-                int id_stand = (int) tblRegistros.getValueAt(row, 0);
-                String licensePlate = (String) tblRegistros.getValueAt(row, 1);
-                Date dataTime = (Date) tblRegistros.getValueAt(row, 2);
-                String mark = (String) tblRegistros.getValueAt(row, 3);
-                String type = (String) tblRegistros.getValueAt(row, 4);
-                int id_employee = (int) tblRegistros.getValueAt(row, 5);
+            
+            if(row != -1){
+                String licensePlate = (String) tblRegistros.getValueAt(row, 0);
+                Date dataTime = (Date) tblRegistros.getValueAt(row, 1);
+                String mark = (String) tblRegistros.getValueAt(row, 2);
+                String type = (String) tblRegistros.getValueAt(row, 3);
+                int idCaseta = (int) tblRegistros.getValueAt(row, 4);
+                int idEmployee = (int) tblRegistros.getValueAt(row, 5);
                 double pay = (double) tblRegistros.getValueAt(row, 6);
-
-                Register register = new Register(id_stand, licensePlate, dataTime, mark, type, id_employee, pay);
-                RegistroAgregar frmAgregarRegistro = new RegistroAgregar(register);
+                
+                Register register =  new Register(licensePlate,dataTime,mark,type,idCaseta,idEmployee,pay);
+                RegistroAgregar frmAgregarRegistro = new RegistroAgregar(frmRegistroPrincipal,register);
                 frmAgregarRegistro.setVisible(true);
                 this.dispose();
             }
         }
-        
+
 
     }//GEN-LAST:event_tblRegistrosMouseClicked
 
@@ -424,7 +414,6 @@ public class RegistroPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

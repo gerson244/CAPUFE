@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,7 +155,10 @@ public class Employee {
     }
 
     public Employee login(String user, String password) {
-        try (Connection connection = ConectorDB.get(); PreparedStatement statement = connection.prepareStatement("SELECT * FROM employee WHERE user =? AND password =?")) {
+        try (Connection connection = ConectorDB.get(); 
+                PreparedStatement statement = connection.prepareStatement(
+                        "SELECT * FROM employee WHERE user =? AND password =?")
+                ) {
             statement.setString(1, user);
             statement.setString(2, password);
             try (ResultSet resultSet = statement.executeQuery()) {
