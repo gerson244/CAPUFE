@@ -24,10 +24,9 @@ import vistas.menu.menu;
  * @author vagui
  */
 public class clientePrincipal extends javax.swing.JFrame {
-    
+
     private clientePrincipal frmClientePrincipal;
 
-    
     /**
      * Creates new form casetasPrincipal
      */
@@ -41,7 +40,7 @@ public class clientePrincipal extends javax.swing.JFrame {
         setVisible(true);
 
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
-        model.setColumnIdentifiers(new Object[]{"name", "direction", "phone"});
+        model.setColumnIdentifiers(new Object[]{"name", "direction", "phone", "user", "password"});
         llenarTabla("");
     }
 
@@ -57,7 +56,9 @@ public class clientePrincipal extends javax.swing.JFrame {
             Object[] rowData = {
                 c.getName(),
                 c.getDirection(),
-                c.getPhone()
+                c.getPhone(),
+                c.getUser(),
+                c.getPassword()
             };
             model.addRow(rowData);
         }
@@ -307,7 +308,9 @@ public class clientePrincipal extends javax.swing.JFrame {
             Object[] rowData = {
                 c.getName(),
                 c.getDirection(),
-                c.getPhone()
+                c.getPhone(),
+                c.getUser(),
+                c.getPassword()
             };
             model.addRow(rowData);
             llenarTabla(filtro);
@@ -324,7 +327,7 @@ public class clientePrincipal extends javax.swing.JFrame {
             if (confirm == JOptionPane.YES_OPTION) {
                 Customer customer = new Customer();
                 int id = Customer.getAll(name).get(0).getId();
-            int result = customer.delete(id); // Obtiene el número de filas afectadas
+                int result = customer.delete(id); // Obtiene el número de filas afectadas
                 if (result > 0) {
                     JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
 
@@ -340,7 +343,7 @@ public class clientePrincipal extends javax.swing.JFrame {
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
         // TODO add your handling code here:
-        
+
         if (evt.getClickCount() == 2) {
             int row = tblClientes.getSelectedRow();
 
@@ -348,14 +351,16 @@ public class clientePrincipal extends javax.swing.JFrame {
                 String name = (String) tblClientes.getValueAt(row, 0);
                 String direction = (String) tblClientes.getValueAt(row, 1);
                 String phone = (String) tblClientes.getValueAt(row, 2);
+                String user = (String) tblClientes.getValueAt(row, 3);
+                String password = (String) tblClientes.getValueAt(row, 4);
 
-                Customer customer = new Customer(name, direction, phone);
-                ClienteAgregar frmAgregarCliente = new ClienteAgregar(frmClientePrincipal,customer);
-                frmAgregarCliente.setVisible(true);
+                Customer customer = new Customer(name, direction, phone, user, password);
+                ClienteEditar EditarCliente = new ClienteEditar(frmClientePrincipal, customer);
+                EditarCliente.setVisible(true);
                 this.dispose();
             }
         }
-        
+
     }//GEN-LAST:event_tblClientesMouseClicked
 
     /**

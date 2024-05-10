@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author
  */
-public class ClienteAgregar extends javax.swing.JFrame {
+public class ClienteEditar extends javax.swing.JFrame {
 
     Customer customer;
     private clientePrincipal frmClientePrincipal;
@@ -29,16 +29,17 @@ public class ClienteAgregar extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public ClienteAgregar() {
+    public ClienteEditar() {
         initComponents();
         configurarBoton(btnAgregar);
         configurarBoton(btnExit);
         setLocationRelativeTo(null);
         setVisible(true);
+        
 
     }
 
-    public ClienteAgregar(clientePrincipal frmClientePrincipal) {
+    public ClienteEditar(clientePrincipal frmClientePrincipal) {
         initComponents();
         this.frmClientePrincipal = frmClientePrincipal;
         configurarBoton(btnAgregar);
@@ -47,8 +48,9 @@ public class ClienteAgregar extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    public ClienteAgregar(clientePrincipal frmClientePrincipal, Customer customer) {
+    public ClienteEditar(clientePrincipal frmClientePrincipal, Customer customer) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.frmClientePrincipal = frmClientePrincipal;
         this.customer = customer;
         if (customer != null) {
@@ -276,37 +278,12 @@ public class ClienteAgregar extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        String name = txfNombre.getText();
-        String direction = txfDirection.getText();
-        String phone = txfPhone.getText();
-
-        Customer newCustomer = new Customer(name, direction, phone);
-        if (newCustomer.save(newCustomer)) {
-            JOptionPane.showMessageDialog(null, "Cliente agregado correctamente");
-
-            if (frmClientePrincipal != null) {
-                frmClientePrincipal.actualizarTabla();
-
-            }
-            clientePrincipal frmCliemte = new clientePrincipal();
-            frmCliemte.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al guardar cliente");
-        }
-        clientePrincipal frmCliemte = new clientePrincipal();
-        frmCliemte.setVisible(true);
-        this.dispose();
-
-        /*
             String name = txfNombre.getText();
             String direction = txfDirection.getText();
             String phone = txfPhone.getText();
             String user = txfUserCliente.getText();
             String password = txfContrasena.getText();
 
-            // Verificar si hay un cliente existente para actualizar
-            if (customer != null) {
                 // Si hay un cliente existente, actualiza sus datos
                 customer.setName(name);
                 customer.setDirection(direction);
@@ -315,33 +292,42 @@ public class ClienteAgregar extends javax.swing.JFrame {
                 customer.setPassword(password);
 
                 // Intenta actualizar el cliente en la base de datos
-                if (customer.update(customer.getId(), name, direction, phone, user, password)) {
+                customer.update(customer.getId(), name, direction, phone, user, password);
                     JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
                     // Actualiza la tabla en el JFrame principal
                     if (frmClientePrincipal != null) {
                         frmClientePrincipal.actualizarTabla();
+                    }else{
+                     JOptionPane.showMessageDialog(null, "Error al actualizar cliente");   
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al actualizar cliente");
-                }
-            } else {
-                // Si no hay cliente existente, crea uno nuevo
-                Customer newCustomer = new Customer(name, direction, phone, user, password);
-                if (newCustomer.save(newCustomer)) {
-                    JOptionPane.showMessageDialog(null, "Cliente agregado correctamente");
-                    // Actualiza la tabla en el JFrame principal
-                    if (frmClientePrincipal != null) {
-                        frmClientePrincipal.actualizarTabla();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al guardar cliente");
-                }
+   
+                    
+                
+            
+        
+        /*
+        String name = txfNombre.getText();
+        String direction = txfDirection.getText();
+        String phone = txfPhone.getText();
+        
+        Customer newCustomer = new Customer(name, direction, phone);
+        if(newCustomer.save(newCustomer)){
+            JOptionPane.showMessageDialog(null, "Cliente agregado correctamente");
+            
+            if(frmClientePrincipal != null){
+                frmClientePrincipal.actualizarTabla();
+                
             }
-
-            // Cierra la ventana actual
-            dispose();
+            clientePrincipal frmCliemte = new clientePrincipal();
+            frmCliemte.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al guardar cliente");
+        }
+        clientePrincipal frmCliemte = new clientePrincipal();
+        frmCliemte.setVisible(true);
+        this.dispose();
          */
-
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
@@ -361,14 +347,30 @@ public class ClienteAgregar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteAgregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteEditar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -389,7 +391,7 @@ public class ClienteAgregar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteAgregar().setVisible(true);
+                new ClienteEditar().setVisible(true);
             }
         });
     }
