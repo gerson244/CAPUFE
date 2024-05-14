@@ -102,7 +102,7 @@
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="FOLIO DE TICKET"/>
+            <Property name="text" type="java.lang.String" value="ID CLIENTE"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnFactura">

@@ -8,7 +8,6 @@ import vistas.*;
 import Encryption.Encoder;
 import conectorDB.ConectorDB;
 import entities.Customer;
-import entities.Employee;
 import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.Color;
@@ -19,7 +18,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import vistas.estilos.DegradedPanel;
 import java.awt.event.KeyEvent;
-import vistas.menu.menu;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import vistas.cliente.menuFactura.MenuCliente;
@@ -179,7 +177,7 @@ public class loginCliente extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("ESTACIO PARA CLIENTES");
+        jLabel5.setText("ESPACIO PARA CLIENTES");
 
         lblRegistrarseCliente.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lblRegistrarseCliente.setForeground(new java.awt.Color(0, 0, 0));
@@ -310,7 +308,7 @@ public class loginCliente extends javax.swing.JFrame {
             Customer customer = customerDAO.login(user, password);
 
             if (customer != null) {
-                JOptionPane.showMessageDialog(null, "Bienvenido " + customer.getName());
+                JOptionPane.showMessageDialog(null, "Bienvenido " + customer.getName()+" ID: "+customer.getId());
 
                 MenuCliente frmMenuCliente = new MenuCliente();
                 frmMenuCliente.setVisible(true);
@@ -327,15 +325,15 @@ public class loginCliente extends javax.swing.JFrame {
         String user = txfUser.getText().trim();
         String password = String.valueOf(mEncoder.ecnode(txfPassword.getText().trim()));
 
-        Employee employeeDAO = new Employee();
-        Employee employee = employeeDAO.login(user, password);
-        if (employee != null) {
-             JOptionPane.showMessageDialog(null, "Bienvenido " + employee.getDegree() + ": " + employee.getName());
-            menu frmMenu = new menu(employee);
-            frmMenu.setVisible(true);
+        Customer customerDAO = new Customer();
+        Customer customer = customerDAO.login(user, password);
+        if (customer != null) {
+            JOptionPane.showMessageDialog(null, "Bienvenido " + customer.getName()+" ID: "+customer.getId());
+
+            MenuCliente frmMenuCliente = new MenuCliente();
+            frmMenuCliente.setVisible(true);
             dispose();
         } else {
-            // invalid credentials, show an error message
             JOptionPane.showMessageDialog(null, "Credenciales inválidas");
         }
 

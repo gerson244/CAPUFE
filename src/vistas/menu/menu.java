@@ -19,7 +19,7 @@ import vistas.login;
 import vistas.menu.casetas.casetasPrincipal;
 import vistas.menu.clientes.clientePrincipal;
 import vistas.menu.empleados.EmpleadosPrincipal;
-import vistas.menu.registros.RegistroPrincipal;
+import vistas.menu.reportes.Reportes;
 
 /**
  *
@@ -341,11 +341,17 @@ public class menu extends javax.swing.JFrame {
             System.out.println(employee.getName());
             // Ahora puedes llamar a los métodos de this.employee sin preocuparte por NullPointerException
             if (this.employee.getDegree().equals("EMPLEADO")) {
-                JOptionPane.showMessageDialog(null, "No tiebe privilegios para acceder a esta seccion");
-            } else {
-                RegistroPrincipal frmRegistroPrincipal = new RegistroPrincipal();
+                
+                JOptionPane.showMessageDialog(null, "Comienza a generar reportes");
+                Reportes frmReportes = new Reportes();
                 setVisible(true);
-                frmRegistroPrincipal.setVisible(true);
+                frmReportes.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Comienza a generar reportes");
+                
+                Reportes frmReportes = new Reportes();
+                setVisible(true);
+                frmReportes.setVisible(true);
                 //this.dispose();
             }
         } else {

@@ -43,7 +43,7 @@ public class MenuCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("FOLIO DE TICKET");
+        jLabel1.setText("ID CLIENTE");
 
         btnFactura.setText("FACTURAR");
 

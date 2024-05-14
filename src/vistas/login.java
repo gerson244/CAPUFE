@@ -152,6 +152,11 @@ public class login extends javax.swing.JFrame {
         txfPassword.setBackground(new java.awt.Color(255, 255, 255));
         txfPassword.setForeground(new java.awt.Color(0, 0, 0));
         txfPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txfPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfPasswordActionPerformed(evt);
+            }
+        });
         txfPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txfPasswordKeyReleased(evt);
@@ -306,6 +311,10 @@ public class login extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void txfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPasswordActionPerformed
 
     /**
      * @param args the command line arguments
