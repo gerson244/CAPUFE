@@ -4,6 +4,8 @@
  */
 package vistas.cliente.menuFactura;
 
+import entities.Customer;
+import entities.FacturaCliente;
 import vistas.Preview;
 
 /**
@@ -12,6 +14,8 @@ import vistas.Preview;
  */
 public class MenuCliente extends javax.swing.JFrame {
 
+    
+    private int idCliente = 0;
     /**
      * Creates new form MenuCliente
      */
@@ -40,12 +44,23 @@ public class MenuCliente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(220, 225, 201));
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ID CLIENTE");
 
         btnFactura.setText("FACTURAR");
+        btnFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacturaActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
         jLabel2.setText("l");
@@ -117,6 +132,20 @@ public class MenuCliente extends javax.swing.JFrame {
         frmPreview.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
+
+          
+//Generar la factura de venta
+                    FacturaCliente pdf = new FacturaCliente();
+                    pdf.DatosCliente(idCliente);
+                    pdf.generarFacturaPDF();
+    }//GEN-LAST:event_btnFacturaActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
