@@ -34,7 +34,6 @@ public class Employee {
             while (resultSet.next()) {
                 Employee e = new Employee();
                 e.setId(resultSet.getInt("id"));
-
                 e.setName(resultSet.getString("name"));
                 e.setDegree(resultSet.getString("degree"));
                 e.setSalary(resultSet.getDouble("salary"));

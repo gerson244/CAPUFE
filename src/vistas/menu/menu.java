@@ -19,7 +19,7 @@ import vistas.login;
 import vistas.menu.casetas.casetasPrincipal;
 import vistas.menu.clientes.clientePrincipal;
 import vistas.menu.empleados.EmpleadosPrincipal;
-import vistas.menu.reportes.Reportes;
+import vistas.menu.reportes.reportes;
 
 /**
  *
@@ -343,13 +343,13 @@ public class menu extends javax.swing.JFrame {
             if (this.employee.getDegree().equals("EMPLEADO")) {
                 
                 JOptionPane.showMessageDialog(null, "Comienza a generar reportes");
-                Reportes frmReportes = new Reportes();
+                reportes frmReportes = new reportes();
                 setVisible(true);
                 frmReportes.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Comienza a generar reportes");
                 
-                Reportes frmReportes = new Reportes();
+                reportes frmReportes = new reportes();
                 setVisible(true);
                 frmReportes.setVisible(true);
                 //this.dispose();
